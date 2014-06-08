@@ -34,6 +34,7 @@ a img{
 
 
 header {
+	background-color: #EEE;
 	border-bottom: 4px black solid;
 }
 
@@ -57,7 +58,8 @@ header #controls a {
 }
 
 #menu {
-	min-height: 200px;
+	background-color: #EEE;
+	height: 100vh;
 	width: 180px;
 	border-left: 4px black solid;
 	text-align: center;
