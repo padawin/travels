@@ -1,14 +1,10 @@
 (function(){
 var travelsApp = angular.module('travelsApp', []);
 
-	travelsApp.controller('TravelsListCtrl', function($scope){
-		$scope.travels = [
-			{
-				'id': '1',
-				'title': 'Portugal 2011',
-				'pics': ['myPic1.jpg', 'myPic2.jpg', 'myPic3.jpg', 'myPic4.jpg']
-			}
-		];
+	travelsApp.controller('TravelsListCtrl', function($scope, $http){
+		$http.get('data/travels.json').success(function(data) {
+			$scope.travels = data;
+		});
 	});
 
 	window.travelsApp = travelsApp;

@@ -1,0 +1,22 @@
+[
+	{
+		"id": "1",
+		"title": "2011 Portugal",
+		"pics": ["myPic1.jpg", "myPic2.jpg", "myPic3.jpg", "myPic4.jpg"]
+	},
+	{
+		"id": "2",
+		"title": "2013 Wales",
+		"pics": ["myPic1.jpg", "myPic2.jpg", "myPic3.jpg", "myPic4.jpg"]
+	},
+	{
+		"id": "3",
+		"title": "2012 China",
+		"pics": ["myPic1.jpg", "myPic2.jpg", "myPic3.jpg", "myPic4.jpg"]
+	},
+	{
+		"id": "4",
+		"title": "2014 Oxford",
+		"pics": ["myPic1.jpg", "myPic2.jpg", "myPic3.jpg"]
+	}
+]
