@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="travelsApp">
+	<head>
+		<meta charset="UTF-8" />
+		<link href="styles/style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="scripts/angular.min.js"></script>
+		<script type="text/javascript" src="scripts/travels.js"></script>
+		<title>My Travels</title>
+	</head>
+	<body ng-controller="TravelsListCtrl">
+		<div id="main">
+			<header>
+				<h1 id="title"><a href="/">Mes voyages</a></h1>
+			</header>
+			<div id="menu"></div>
+			<div id="content">
+				<ul id="travels">
+					<li ng-repeat="travel in travels" class="travel">
+						<a href="/travel/index/id_travel/{{travel.id}}">
+							<img src="/images/100x100/{{travel.pics[0]}}" alt="{{travel.pics[0]}}" />
+							<img src="/images/100x100/{{travel.pics[1]}}" alt="{{travel.pics[1]}}" />
+							<img src="/images/100x100/{{travel.pics[2]}}" alt="{{travel.pics[2]}}" />
+							<img src="/images/100x100/{{travel.pics[3]}}" alt="{{travel.pics[3]}}" />
+							<span class="travel-title"><span>{{travel.title}}</span></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<br class="clear" />
+			<footer>
+			</footer>
+		</div>
+	</body>
+</html>
+

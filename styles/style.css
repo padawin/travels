@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+body{
+	font-family:Helvetica, Arial, sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+.clear{
+	clear:both;
+}
+
+h1, h2, h3, h4{
+	margin: 0px;
+	text-align:center;
+	text-transform:uppercase;
+}
+
+a,a:visited{
+	color: black;
+}
+
+ul a {
+	text-decoration: none;
+}
+
+a img{
+	border:none;
+}
+
+.msg{
+	color:red;
+}
+
+
+header {
+	border-bottom: 4px black solid;
+}
+
+header #title {
+	line-height: 70px;
+	margin-right: 180px;
+	border-right: 4px black solid;
+}
+
+header #controls {
+	height: 70px;
+	width: 180px;
+	float: right;
+	text-align: center;
+}
+
+header #controls a {
+	display: inline-block;
+	margin-top: 23px;
+	padding: 0px 7px 0px 7px;
+}
+
+#menu {
+	min-height: 200px;
+	width: 180px;
+	border-left: 4px black solid;
+	text-align: center;
+	float: right;
+	padding-bottom: 15px;
+}
+
+#menu #places {
+	list-style:none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#menu #places .place {
+	border-bottom: 1px #aaa solid;
+	margin: 7px;
+	padding: 7px;
+}
+
+#menu #places .place:hover {
+	background-color: #ddd;
+	cursor: pointer;
+}
+
+#menu #places .place img {
+	display: block;
+	margin:auto;
+}
+
+#content {
+	margin-right: 184px;
+	padding: 7px;
+}
+
+#foot {
+	border-top: 1px #aaa solid;
+	margin-top: 15px;
+	text-align: right;
+	padding: 7px;
+	font-size: 12px;
+}
+
+
+/* HOME PAGE */
+#content ul {
+	list-style: none;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+#content #travels .travel {
+	border: 1px white solid;
+	padding: 0px;
+	margin: 0px;
+	float:left;
+	width: 200px;
+	height: 200px;
+	text-align: center;
+	position: relative;
+	margin: 10px;
+}
+
+#content #travels .travel:hover {
+	border: 1px #aaa solid;
+}
+
+#content #travels .travel img {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+}
+
+#content #travels .travel a {
+	height: 20px;
+}
+
+#content #travels .travel a span.travel-title {
+	display: block;
+	width: 100%;
+	position: absolute;
+	top: 89px;
+}
+
+#content #travels .travel a span.travel-title span {
+	background-color: white;
+	padding: 7px;
+}
+
+/* END HOME PAGE */
