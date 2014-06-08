@@ -15,7 +15,7 @@
 			<div id="menu"></div>
 			<div id="content">
 				<ul id="travels">
-					<li ng-repeat="travel in travels" class="travel">
+					<li ng-repeat="travel in travels | orderBy:orderProp" class="travel">
 						<a href="/travel/index/id_travel/{{travel.id}}">
 							<img src="/images/100x100/{{travel.pics[0]}}" alt="{{travel.pics[0]}}" />
 							<img src="/images/100x100/{{travel.pics[1]}}" alt="{{travel.pics[1]}}" />
