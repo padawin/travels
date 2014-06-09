@@ -57,10 +57,10 @@ def generate(path, thumbFolder):
 
 def main(argv):
 	path = argv[0]
-	destFile = argv[1]
+	jsonFile = argv[1]
 	thumbFolder = argv[2]
 	arbo = generate(path, thumbFolder)
-	with open(destFile, 'w') as outfile:
+	with open(jsonFile, 'w') as outfile:
 		json.dump(arbo, outfile)
 
 if __name__ == "__main__":
