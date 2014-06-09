@@ -12,6 +12,7 @@
 			$http.get('data/travels.json').success(function(data) {
 				var t, pics;
 				for (t in data) {
+					data[t].id = t;
 					data[t].previewPics = [].concat.apply([], data[t].pics)
 						// duplicate initial pics list
 						.slice(0)

@@ -1,6 +1,5 @@
-[
-	{
-		"id": "2011Portugal",
+{
+	"2011Portugal": {
 		"title": "2011 Portugal",
 		"places": ["Mertola", "Villa Real"],
 		"pics": [
@@ -8,8 +7,7 @@
 			["myPicVillaReal1.jpg", "myPicVillaReal2.jpg", "myPicVillaReal3.jpg", "myPicVillaReal4.jpg"]
 		]
 	},
-	{
-		"id": "2013Wales",
+	"2013Wales": {
 		"title": "2013 Wales",
 		"places": ["Bryn Gwynant", "Criccieth"],
 		"pics": [
@@ -17,8 +15,7 @@
 			["myPicCriccieth1.jpg", "myPicCriccieth2.jpg", "myPicCriccieth3.jpg", "myPicCriccieth4.jpg"]
 		]
 	},
-	{
-		"id": "2012China",
+	"2012China": {
 		"title": "2012 China",
 		"places": ["Taiwan", "Beijing"],
 		"pics": [
@@ -26,9 +23,8 @@
 			["myPicBeijing1.jpg", "myPicBeijing2.jpg", "myPicBeijing3.jpg", "myPicBeijing4.jpg"]
 		]
 	},
-	{
-		"id": "2014Oxford",
+	"2014Oxford": {
 		"title": "2014 Oxford",
 		"pics": ["myPicOxford1.jpg", "myPicOxford2.jpg", "myPicOxford3.jpg"]
 	}
-]
+}
