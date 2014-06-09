@@ -3,6 +3,7 @@
 import sys
 import os
 import json
+from subprocess import call
 
 def getFiles(path):
 	fileList = []
@@ -14,7 +15,6 @@ def getFiles(path):
 	return fileList
 
 def generateThumbnails(path, savePath, destPath):
-	from subprocess import call
 	call(["php", "bin/resize.php", path, savePath, destPath])
 
 def generate(path, thumbFolder):
