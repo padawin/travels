@@ -3,7 +3,6 @@
 import sys
 import os
 import json
-from os.path import isfile, join
 
 def getFiles(path):
 	fileList = []
