@@ -37,7 +37,7 @@ def generate(path):
 			}
 
 		if place is None:
-			arbo[travelId]["pics"].append(fileName)
+			arbo[travelId]["pics"].append(travel + '/' + fileName)
 		else:
 			if place not in arbo[travelId]["places"]:
 				arbo[travelId]["places"].append(place)
@@ -46,7 +46,7 @@ def generate(path):
 			if len(arbo[travelId]["pics"]) < placeIndex + 1:
 				arbo[travelId]["pics"].append([])
 
-			arbo[travelId]["pics"][placeIndex].append(fileName)
+			arbo[travelId]["pics"][placeIndex].append(travel + '/' + place + '/' + fileName)
 	return arbo
 
 def main(argv):
