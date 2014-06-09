@@ -13,10 +13,16 @@ def getFiles(path):
 
 	return fileList
 
-def generate(path):
+def generateThumbnails(path, savePath, destPath):
+	from subprocess import call
+	call(["php", "bin/resize.php", path, savePath, destPath])
+
+def generate(path, thumbFolder):
 	arbo = {}
 	for f in getFiles(path):
-		f = f[len(path):]
+		structName = f[len(path):]
+		generateThumbnails(f, structName, thumbFolder)
+		f = structName
 		struct = f.split('/')
 		fileName = struct[-1]
 		place = None
@@ -52,7 +58,8 @@ def generate(path):
 def main(argv):
 	path = argv[0]
 	destFile = argv[1]
-	arbo = generate(path)
+	thumbFolder = argv[2]
+	arbo = generate(path, thumbFolder)
 	with open(destFile, 'w') as outfile:
 		json.dump(arbo, outfile)
 
