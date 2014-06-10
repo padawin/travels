@@ -49,12 +49,17 @@
 		});
 	});
 
-	travelsApp.controller('PlacesListCtrl', function($scope, $http, $routeParams){
+	travelsApp.controller('PlacesListCtrl', function($scope, $http, $routeParams, $location){
 		$scope.travelId = $routeParams.travelId;
 		getTravels($scope, $http, function($scope){
 			$scope.places = [];
 			var p, places = $scope.travels[$scope.travelId].places,
 				pics = $scope.travels[$scope.travelId].pics;
+
+			if (places.length == 0) {
+				$location.url('/pictures/' + $scope.travelId);
+				return;
+			}
 
 			for (var p in places) {
 				$scope.places[p] = {
