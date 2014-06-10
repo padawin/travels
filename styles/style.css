@@ -150,3 +150,33 @@ header #controls a {
 }
 
 /* END HOME PAGE */
+
+/* PLACES LIST */
+#places {
+	text-align: center;
+}
+
+#places .place {
+	display: block;
+	float: left;
+	border-bottom: 1px #aaa solid;
+	margin: 7px;
+	padding: 7px;
+	width: 130px;
+}
+
+#places .place:hover {
+	background-color: #ddd;
+}
+
+#places .place img {
+	display: block;
+	margin:auto;
+	margin-bottom: 7px;
+}
+
+#places .place a {
+	text-decoration: none;
+}
+
+/* END PLACES LIST */
