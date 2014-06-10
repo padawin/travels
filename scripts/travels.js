@@ -10,6 +10,10 @@
 				templateUrl: "partials/travels-list.html",
 				controller: "TravelsListCtrl"
 			})
+			.when("/places/:travelId", {
+				templateUrl: "partials/places-list.html",
+				controller: "PlacesListCtrl"
+			})
 			.otherwise({redirectTo: "" });
 	});
 
@@ -42,6 +46,23 @@
 					// takes the 4 first
 					.splice(0, 4);
 			}
+		});
+	});
+
+	travelsApp.controller('PlacesListCtrl', function($scope, $http, $routeParams){
+		$scope.travelId = $routeParams.travelId;
+		getTravels($scope, $http, function($scope){
+			$scope.places = [];
+			var p, places = $scope.travels[$scope.travelId].places,
+				pics = $scope.travels[$scope.travelId].pics;
+
+			for (var p in places) {
+				$scope.places[p] = {
+					'name': places[p],
+					'preview': pics[p][0|Math.random()*pics[p].length]
+				};
+			}
+
 		});
 	});
 
