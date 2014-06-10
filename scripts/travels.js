@@ -1,7 +1,17 @@
 (function(){
-	var travelsApp = angular.module('travelsApp', []),
+	var travelsApp = angular.module('travelsApp', ['ngRoute']),
 		travels,
 		getTravels;
+
+	travelsApp.config(function($routeProvider, $locationProvider) {
+		$locationProvider.hashPrefix('');
+		$routeProvider
+			.when("/", {
+				templateUrl: "partials/travels-list.html",
+				controller: "TravelsListCtrl"
+			})
+			.otherwise({redirectTo: "" });
+	});
 
 	getTravels = function($scope, $http, doneCallback)
 	{
