@@ -4,24 +4,17 @@
 		<meta charset="UTF-8" />
 		<link href="styles/style.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="scripts/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 		<script type="text/javascript" src="scripts/travels.js"></script>
 		<title>My Travels</title>
 	</head>
-	<body ng-controller="TravelsListCtrl">
+	<body>
 		<div id="main">
 			<header>
 				<h1 id="title"><a href="/">Mes voyages</a></h1>
 			</header>
 			<div id="menu"></div>
-			<div id="content">
-				<ul id="travels">
-					<li ng-repeat="travel in travels | orderBy:orderProp" class="travel">
-						<a href="/travel/index/id_travel/{{travel.id}}">
-							<img ng-repeat="preview in travel.previewPics" src="images/100x100x1/{{preview}}" alt="{{preview}}" />
-							<span class="travel-title"><span>{{travel.title}}</span></span>
-						</a>
-					</li>
-				</ul>
+			<div id="content" ng-view>
 			</div>
 			<br class="clear" />
 			<footer>

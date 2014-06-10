@@ -1,0 +1,8 @@
+<ul id="travels">
+	<li ng-repeat="travel in travels | orderBy:orderProp" class="travel">
+		<a href="#/places/{{travel.id}}">
+			<img ng-repeat="preview in travel.previewPics" src="images/100x100x1/{{preview}}" alt="{{preview}}" />
+			<span class="travel-title"><span>{{travel.title}}</span></span>
+		</a>
+	</li>
+</ul>
