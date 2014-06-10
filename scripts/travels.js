@@ -14,6 +14,14 @@
 				templateUrl: "partials/places-list.html",
 				controller: "PlacesListCtrl"
 			})
+			.when("/pictures/:travelId", {
+				templateUrl: "partials/pictures-list.html",
+				controller: "PicturesListCtrl"
+			})
+			.when("/pictures/:travelId/:place", {
+				templateUrl: "partials/pictures-list.html",
+				controller: "PicturesListCtrl"
+			})
 			.otherwise({redirectTo: "" });
 	});
 
@@ -68,6 +76,43 @@
 				};
 			}
 
+		});
+	});
+
+	travelsApp.controller('PicturesListCtrl', function($scope, $http, $routeParams){
+		var travelId = $routeParams.travelId,
+			place = $routeParams.place;
+
+		getTravels($scope, $http, function($scope) {
+			if (!$scope.travels[travelId]) {
+				console.log('error travel');
+				return;
+			}
+
+			var pictures, placeIndex;
+			if (!place) {
+				$scope.title = $scope.travels[travelId].title;
+				// 0 place for this travel
+				if ($scope.travels[travelId].places.length == 0) {
+					pictures = $scope.travels[travelId].pics;
+				}
+				// else get all the pictures of the travel
+				else {
+					pictures = [].concat.apply([], $scope.travels[travelId].pics);
+				}
+			}
+			else {
+				placeIndex = $scope.travels[travelId].places.indexOf(place);
+				if (!~placeIndex) {
+					console.log('error place');
+					return;
+				}
+
+				$scope.title = place;
+				pictures = $scope.travels[travelId].pics[placeIndex];
+			}
+
+			$scope.pictures = pictures;
 		});
 	});
 
