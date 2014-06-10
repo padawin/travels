@@ -17,11 +17,10 @@ def getFiles(path):
 def generateThumbnails(path, savePath, destPath):
 	call(["php", "bin/resize.php", path, savePath, destPath])
 
-def generate(path, thumbFolder):
-	arbo = {}
+def generate(arbo, path, thumbFolder):
 	for fullPath in getFiles(path):
+		print fullPath
 		structName = fullPath[len(path):]
-		generateThumbnails(fullPath, structName, thumbFolder)
 		struct = structName.split('/')
 		fileName = struct[-1]
 		place = None
@@ -41,8 +40,12 @@ def generate(path, thumbFolder):
 				"pics": []
 			}
 
+		tumb = False
 		if place is None:
-			arbo[travelId]["pics"].append(travel + '/' + fileName)
+			pic = travel + '/' + fileName
+			if pic not in arbo[travelId]["pics"]:
+				arbo[travelId]["pics"].append(pic)
+				tumb = True
 		else:
 			if place not in arbo[travelId]["places"]:
 				arbo[travelId]["places"].append(place)
@@ -51,14 +54,28 @@ def generate(path, thumbFolder):
 			if len(arbo[travelId]["pics"]) < placeIndex + 1:
 				arbo[travelId]["pics"].append([])
 
-			arbo[travelId]["pics"][placeIndex].append(travel + '/' + place + '/' + fileName)
+			pic = travel + '/' + place + '/' + fileName
+			if pic not in arbo[travelId]["pics"][placeIndex]:
+				arbo[travelId]["pics"][placeIndex].append(pic)
+				tumb = True
+
+		if tumb:
+			generateThumbnails(fullPath, structName, thumbFolder)
+
 	return arbo
 
 def main(argv):
 	path = argv[0]
 	jsonFile = argv[1]
 	thumbFolder = argv[2]
-	arbo = generate(path, thumbFolder)
+
+	try:
+		json_data=open(jsonFile)
+		data = json.load(json_data)
+		json_data.close()
+	except IOError:
+		data = {}
+	arbo = generate(data, path, thumbFolder)
 	with open(jsonFile, 'w') as outfile:
 		json.dump(arbo, outfile)
 
