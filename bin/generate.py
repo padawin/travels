@@ -17,8 +17,7 @@ def getFiles(path):
 def generateThumbnails(path, savePath, destPath):
 	call(["php", "bin/resize.php", path, savePath, destPath])
 
-def generate(path, thumbFolder):
-	arbo = {}
+def generate(arbo, path, thumbFolder):
 	for fullPath in getFiles(path):
 		structName = fullPath[len(path):]
 		generateThumbnails(fullPath, structName, thumbFolder)
@@ -58,7 +57,14 @@ def main(argv):
 	path = argv[0]
 	jsonFile = argv[1]
 	thumbFolder = argv[2]
-	arbo = generate(path, thumbFolder)
+
+	try:
+		json_data=open(jsonFile)
+		data = json.load(json_data)
+		json_data.close()
+	except IOError:
+		data = {}
+	arbo = generate(data, path, thumbFolder)
 	with open(jsonFile, 'w') as outfile:
 		json.dump(arbo, outfile)
 
