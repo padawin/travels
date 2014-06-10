@@ -180,3 +180,43 @@ header #controls a {
 }
 
 /* END PLACES LIST */
+
+/* PICTURES PAGE */
+#content .picture-wrapper {
+	margin: 6px;
+	cursor: pointer;
+	width: 250px;
+	height: 250px;
+	float: left;
+	text-align: center;
+	position: relative;
+}
+
+#content .picture-wrapper > img {
+	border: 1px white solid;
+}
+
+#content .picture-wrapper:hover > img {
+	border: 1px #aaa solid;
+}
+
+#content .picture-wrapper .control {
+	display: none;
+	position: absolute;
+	top: 0px;
+	right: -2px;
+	background-color: white;
+	padding: 3px;
+	opacity:0.5;
+	filter:alpha(opacity:50);
+}
+
+#content .picture-wrapper .control:hover {
+	opacity:1;
+	filter:alpha(opacity:100);
+}
+
+#content .picture-wrapper:hover .control {
+	display: block;
+}
+/* END PICTURES PAGE */
