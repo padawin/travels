@@ -79,13 +79,13 @@
 		});
 	});
 
-	travelsApp.controller('PicturesListCtrl', function($scope, $http, $routeParams){
+	travelsApp.controller('PicturesListCtrl', function($scope, $http, $routeParams, $location){
 		var travelId = $routeParams.travelId,
 			place = $routeParams.place;
 
 		getTravels($scope, $http, function($scope) {
 			if (!$scope.travels[travelId]) {
-				console.log('error travel');
+				$location.url('/');
 				return;
 			}
 
@@ -104,7 +104,7 @@
 			else {
 				placeIndex = $scope.travels[travelId].places.indexOf(place);
 				if (!~placeIndex) {
-					console.log('error place');
+					$location.url('/');
 					return;
 				}
 
