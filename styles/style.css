@@ -59,7 +59,7 @@ header #controls a {
 
 #menu {
 	background-color: #EEE;
-	height: 100vh;
+	min-height: 100vh;
 	width: 180px;
 	border-left: 4px black solid;
 	text-align: center;
