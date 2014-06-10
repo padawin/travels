@@ -19,6 +19,7 @@ def generateThumbnails(path, savePath, destPath):
 
 def generate(arbo, path, thumbFolder):
 	for fullPath in getFiles(path):
+		print fullPath
 		structName = fullPath[len(path):]
 		struct = structName.split('/')
 		fileName = struct[-1]
