@@ -1,6 +1,6 @@
 <ul id="places">
 	<li ng-repeat="place in places | orderBy:orderProp" class="place">
-		<a href="#/pictures/travel/{{travelId}}/place/{{place.name}}">
+		<a href="#/pictures/{{travelId}}/{{place.name}}">
 		<img src="images/118x133x1/{{place.preview}}" alt="{{place.preview}}" />
 		<span class="place_name">{{place.name}}</span>
 		</a>
