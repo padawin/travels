@@ -3,34 +3,36 @@
 		travels,
 		getTravels;
 
-	getTravels = function($scope, $http)
+	getTravels = function($scope, $http, doneCallback)
 	{
 		if (travels != null) {
 			$scope.travels = travels;
+			doneCallback && doneCallback($scope);
 		}
 		else {
 			$http.get('data/travels.json').success(function(data) {
-				var t, pics;
-				for (t in data) {
-					data[t].id = t;
-					data[t].previewPics = [].concat.apply([], data[t].pics)
-						// duplicate initial pics list
-						.slice(0)
-						// randomize
-						.sort(function() { return 0.5 - Math.random() })
-						// takes the 4 first
-						.splice(0, 4);
-				}
-
+				travels = data;
 				$scope.travels = data;
-				$scope.orderProp = 'title';
+				doneCallback && doneCallback($scope);
 			});
 		}
 	};
 
-
 	travelsApp.controller('TravelsListCtrl', function($scope, $http){
-		getTravels($scope, $http);
+		$scope.orderProp = 'title';
+		getTravels($scope, $http, function($scope){
+			var t, pics;
+			for (t in $scope.travels) {
+				$scope.travels[t].id = t;
+				$scope.travels[t].previewPics = [].concat.apply([], $scope.travels[t].pics)
+					// duplicate initial pics list
+					.slice(0)
+					// randomize
+					.sort(function() { return 0.5 - Math.random() })
+					// takes the 4 first
+					.splice(0, 4);
+			}
+		});
 	});
 
 	window.travelsApp = travelsApp;
