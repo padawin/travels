@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="travelsApp">
+<html>
 	<head>
 		<meta charset="UTF-8" />
 		<link href="styles/style.css" rel="stylesheet" type="text/css" />
@@ -9,17 +9,22 @@
 		<title>My Travels</title>
 	</head>
 	<body>
-		<div id="main">
-			<header>
-				<h1 id="title"><a href="#">Mes voyages</a></h1>
-			</header>
-			<div id="menu"></div>
-			<div id="content" ng-view>
-			</div>
-			<br class="clear" />
-			<footer>
-			</footer>
+		<header>
+			<h1 id="title"><a href="#">Mes voyages</a></h1>
+		</header>
+		<div id="menu">
+			<ng-view></ng-view>
 		</div>
+		<div id="content">
+			<ng-view></ng-view>
+		</div>
+		<br class="clear" />
+		<footer>
+		</footer>
+		<script type="text/javascript">
+			angular.bootstrap(document.getElementById("content"), ['travelsApp']);
+			angular.bootstrap(document.getElementById("menu"), ['travelsAppMenu']);
+		</script>
 	</body>
 </html>
 
