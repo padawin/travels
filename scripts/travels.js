@@ -1,9 +1,9 @@
 (function(){
-	var travelsApp = angular.module('travelsApp', ['ngRoute']),
+	var travelsApp,
 		travels,
 		getTravels;
 
-	travelsApp.config(function($routeProvider, $locationProvider) {
+	travelsApp = angular.module("travelsApp", ['ngRoute'], function($routeProvider, $locationProvider) {
 		$locationProvider.hashPrefix('');
 		$routeProvider
 			.when("/", {
