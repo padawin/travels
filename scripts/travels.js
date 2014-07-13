@@ -1,5 +1,6 @@
 (function(){
 	var travelsApp,
+		travelsAppMenu,
 		travels,
 		getTravels;
 
@@ -23,6 +24,19 @@
 				controller: "PicturesListCtrl"
 			})
 			.otherwise({redirectTo: "" });
+	});
+
+	travelsAppMenu = angular.module("travelsAppMenu", ['ngRoute'], function($routeProvider, $locationProvider) {
+		$locationProvider.hashPrefix('');
+		$routeProvider
+			.when("/pictures/:travelId", {
+				templateUrl: "partials/places-list-menu.html",
+				controller: "PlacesListMenuCtrl"
+			})
+			.when("/pictures/:travelId/:place", {
+				templateUrl: "partials/places-list-menu.html",
+				controller: "PlacesListMenuCtrl"
+			});
 	});
 
 	getTravels = function($scope, $http, doneCallback)
@@ -113,6 +127,28 @@
 			}
 
 			$scope.pictures = pictures;
+		});
+	});
+
+	travelsAppMenu.controller('PlacesListMenuCtrl', function($scope, $http, $routeParams){
+		var travelId = $routeParams.travelId;
+
+		getTravels($scope, $http, function($scope){
+			$scope.menuPlaces = [];
+			var p, places = $scope.travels[travelId].places,
+				pics = $scope.travels[travelId].pics;
+
+			if (places.length == 0) {
+				$location.url('/pictures/' + travelId);
+				return;
+			}
+
+			for (var p in places) {
+				$scope.menuPlaces[p] = {
+					'name': places[p],
+					'preview': pics[p][0|Math.random()*pics[p].length]
+				};
+			}
 		});
 	});
 
