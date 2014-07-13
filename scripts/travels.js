@@ -89,7 +89,6 @@
 					'preview': pics[p][0|Math.random()*pics[p].length]
 				};
 			}
-
 		});
 	});
 
