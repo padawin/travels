@@ -137,11 +137,6 @@
 			var p, places = $scope.travels[travelId].places,
 				pics = $scope.travels[travelId].pics;
 
-			if (places.length == 0) {
-				$location.url('/pictures/' + travelId);
-				return;
-			}
-
 			for (var p in places) {
 				$scope.menuPlaces[p] = {
 					'name': places[p],
