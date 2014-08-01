@@ -2,6 +2,7 @@
 	var travelsApp,
 		travelsAppMenu,
 		travels,
+		PlacesListCtrl,
 		getTravels;
 
 	travelsApp = angular.module("travelsApp", ['ngRoute'], function($routeProvider, $locationProvider) {
@@ -24,19 +25,6 @@
 				controller: "PicturesListCtrl"
 			})
 			.otherwise({redirectTo: "" });
-	});
-
-	travelsAppMenu = angular.module("travelsAppMenu", ['ngRoute'], function($routeProvider, $locationProvider) {
-		$locationProvider.hashPrefix('');
-		$routeProvider
-			.when("/pictures/:travelId", {
-				templateUrl: "partials/places-list-menu.html",
-				controller: "PlacesListMenuCtrl"
-			})
-			.when("/pictures/:travelId/:place", {
-				templateUrl: "partials/places-list-menu.html",
-				controller: "PlacesListMenuCtrl"
-			});
 	});
 
 	getTravels = function($scope, $http, doneCallback)
@@ -129,7 +117,7 @@
 		});
 	});
 
-	travelsAppMenu.controller('PlacesListMenuCtrl', function($scope, $http, $routeParams){
+	PlacesListMenuCtrl = function($rootScope, $scope, $http, $routeParams){
 		var travelId = $routeParams.travelId;
 
 		getTravels($scope, $http, function($scope){
@@ -144,7 +132,8 @@
 				};
 			}
 		});
-	});
+	};
 
 	window.travelsApp = travelsApp;
+	window.PlacesListMenuCtrl = PlacesListMenuCtrl;
 })();
