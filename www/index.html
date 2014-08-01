@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="travelsApp">
 	<head>
 		<meta charset="UTF-8" />
 		<link href="styles/style.css" rel="stylesheet" type="text/css" />
@@ -12,8 +12,15 @@
 		<header>
 			<h1 id="title"><a href="#">Mes voyages</a></h1>
 		</header>
-		<div id="menu">
-			<ng-view></ng-view>
+		<div id="menu" ng-controller="PlacesListMenuCtrl">
+			<ul id="places">
+				<li class="place" ng-repeat="place in menuPlaces | orderBy:orderProp">
+					<a href="#/pictures/{{travelId}}/{{place.name}}">
+					<img ng-src="images/118x133x1/{{place.preview}}" alt="{{place.preview}}" />
+					<span class="place_name">{{place.name}}</span>
+					</a>
+				</li>
+			</ul>
 		</div>
 		<div id="content">
 			<ng-view></ng-view>
@@ -21,10 +28,6 @@
 		<br class="clear" />
 		<footer>
 		</footer>
-		<script type="text/javascript">
-			angular.bootstrap(document.getElementById("content"), ['travelsApp']);
-			angular.bootstrap(document.getElementById("menu"), ['travelsAppMenu']);
-		</script>
 	</body>
 </html>
 

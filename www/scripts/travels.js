@@ -2,6 +2,7 @@
 	var travelsApp,
 		travelsAppMenu,
 		travels,
+		PlacesListCtrl,
 		getTravels;
 
 	travelsApp = angular.module("travelsApp", ['ngRoute'], function($routeProvider, $locationProvider) {
@@ -26,19 +27,6 @@
 			.otherwise({redirectTo: "" });
 	});
 
-	travelsAppMenu = angular.module("travelsAppMenu", ['ngRoute'], function($routeProvider, $locationProvider) {
-		$locationProvider.hashPrefix('');
-		$routeProvider
-			.when("/pictures/:travelId", {
-				templateUrl: "partials/places-list-menu.html",
-				controller: "PlacesListMenuCtrl"
-			})
-			.when("/pictures/:travelId/:place", {
-				templateUrl: "partials/places-list-menu.html",
-				controller: "PlacesListMenuCtrl"
-			});
-	});
-
 	getTravels = function($scope, $http, doneCallback)
 	{
 		if (travels != null) {
@@ -54,7 +42,8 @@
 		}
 	};
 
-	travelsApp.controller('TravelsListCtrl', function($scope, $http){
+	travelsApp.controller('TravelsListCtrl', function($rootScope, $scope, $http){
+		$rootScope.$emit('display-places-list', 0);
 		$scope.orderProp = 'title';
 		getTravels($scope, $http, function($scope){
 			var t, pics;
@@ -71,7 +60,8 @@
 		});
 	});
 
-	travelsApp.controller('PlacesListCtrl', function($scope, $http, $routeParams, $location){
+	travelsApp.controller('PlacesListCtrl', function($rootScope, $scope, $http, $routeParams, $location){
+		$rootScope.$emit('display-places-list', 0);
 		$scope.travelId = $routeParams.travelId;
 		getTravels($scope, $http, function($scope){
 			$scope.places = [];
@@ -92,9 +82,11 @@
 		});
 	});
 
-	travelsApp.controller('PicturesListCtrl', function($scope, $http, $routeParams, $location){
+	travelsApp.controller('PicturesListCtrl', function($rootScope, $scope, $http, $routeParams, $location){
 		var travelId = $routeParams.travelId,
 			place = $routeParams.place;
+
+		$rootScope.$emit('display-places-list', 1);
 
 		getTravels($scope, $http, function($scope) {
 			if (!$scope.travels[travelId]) {
@@ -129,22 +121,30 @@
 		});
 	});
 
-	travelsAppMenu.controller('PlacesListMenuCtrl', function($scope, $http, $routeParams){
-		var travelId = $routeParams.travelId;
-
-		getTravels($scope, $http, function($scope){
-			$scope.menuPlaces = [];
-			var p, places = $scope.travels[travelId].places,
-				pics = $scope.travels[travelId].pics;
-
-			for (var p in places) {
-				$scope.menuPlaces[p] = {
-					'name': places[p],
-					'preview': pics[p][0|Math.random()*pics[p].length]
-				};
+	PlacesListMenuCtrl = function($rootScope, $scope, $http, $routeParams){
+		$rootScope.$on('display-places-list', function(e, display) {
+			if (!display) {
+				$scope.menuPlaces = [];
+				return;
 			}
+
+			var travelId = $routeParams.travelId;
+
+			getTravels($scope, $http, function($scope){
+				$scope.menuPlaces = [];
+				var p, places = $scope.travels[travelId].places,
+					pics = $scope.travels[travelId].pics;
+
+				for (var p in places) {
+					$scope.menuPlaces[p] = {
+						'name': places[p],
+						'preview': pics[p][0|Math.random()*pics[p].length]
+					};
+				}
+			});
 		});
-	});
+	};
 
 	window.travelsApp = travelsApp;
+	window.PlacesListMenuCtrl = PlacesListMenuCtrl;
 })();
