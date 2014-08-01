@@ -42,7 +42,8 @@
 		}
 	};
 
-	travelsApp.controller('TravelsListCtrl', function($scope, $http){
+	travelsApp.controller('TravelsListCtrl', function($rootScope, $scope, $http){
+		$rootScope.$emit('display-places-list', 0);
 		$scope.orderProp = 'title';
 		getTravels($scope, $http, function($scope){
 			var t, pics;
@@ -59,7 +60,8 @@
 		});
 	});
 
-	travelsApp.controller('PlacesListCtrl', function($scope, $http, $routeParams, $location){
+	travelsApp.controller('PlacesListCtrl', function($rootScope, $scope, $http, $routeParams, $location){
+		$rootScope.$emit('display-places-list', 0);
 		$scope.travelId = $routeParams.travelId;
 		getTravels($scope, $http, function($scope){
 			$scope.places = [];
@@ -80,9 +82,11 @@
 		});
 	});
 
-	travelsApp.controller('PicturesListCtrl', function($scope, $http, $routeParams, $location){
+	travelsApp.controller('PicturesListCtrl', function($rootScope, $scope, $http, $routeParams, $location){
 		var travelId = $routeParams.travelId,
 			place = $routeParams.place;
+
+		$rootScope.$emit('display-places-list', 1);
 
 		getTravels($scope, $http, function($scope) {
 			if (!$scope.travels[travelId]) {
@@ -118,19 +122,26 @@
 	});
 
 	PlacesListMenuCtrl = function($rootScope, $scope, $http, $routeParams){
-		var travelId = $routeParams.travelId;
-
-		getTravels($scope, $http, function($scope){
-			$scope.menuPlaces = [];
-			var p, places = $scope.travels[travelId].places,
-				pics = $scope.travels[travelId].pics;
-
-			for (var p in places) {
-				$scope.menuPlaces[p] = {
-					'name': places[p],
-					'preview': pics[p][0|Math.random()*pics[p].length]
-				};
+		$rootScope.$on('display-places-list', function(e, display) {
+			if (!display) {
+				$scope.menuPlaces = [];
+				return;
 			}
+
+			var travelId = $routeParams.travelId;
+
+			getTravels($scope, $http, function($scope){
+				$scope.menuPlaces = [];
+				var p, places = $scope.travels[travelId].places,
+					pics = $scope.travels[travelId].pics;
+
+				for (var p in places) {
+					$scope.menuPlaces[p] = {
+						'name': places[p],
+						'preview': pics[p][0|Math.random()*pics[p].length]
+					};
+				}
+			});
 		});
 	};
 
