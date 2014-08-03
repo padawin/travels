@@ -19,7 +19,8 @@ $destinationPath = $argv[3];
 //copy the picture to the htdocs folder
 foreach ($thumbSizes as $size) {
 	$image = new Butterfly_File_Image($imageLocation);
-	$dirname = dirname($destinationPath . '/' . implode('x', $size) . '/' . $imageSavePath);
+	$thumbPath = $destinationPath . '/' . implode('x', $size) . '/' . $imageSavePath;
+	$dirname = dirname($thumbPath);
 	if (!is_dir($dirname)) {
 		mkdir($dirname, 0777, true);
 	}
@@ -37,5 +38,5 @@ foreach ($thumbSizes as $size) {
 	}
 
 	$image->resize($size, uniqid('/tmp/img'));
-	$image->copy($destinationPath . '/' . implode('x', $size) . '/' . $imageSavePath);
+	$image->copy($thumbPath);
 }
