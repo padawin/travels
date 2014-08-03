@@ -20,6 +20,10 @@ $destinationPath = $argv[3];
 foreach ($thumbSizes as $size) {
 	$image = new Butterfly_File_Image($imageLocation);
 	$thumbPath = $destinationPath . '/' . implode('x', $size) . '/' . $imageSavePath;
+	if (is_file($thumbPath)) {
+		continue;
+	}
+
 	$dirname = dirname($thumbPath);
 	if (!is_dir($dirname)) {
 		mkdir($dirname, 0777, true);
