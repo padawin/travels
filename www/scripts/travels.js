@@ -128,12 +128,12 @@
 				return;
 			}
 
-			var travelId = $routeParams.travelId;
+			$scope.travelId = $routeParams.travelId;
 
 			getTravels($scope, $http, function($scope){
 				$scope.menuPlaces = [];
-				var p, places = $scope.travels[travelId].places,
-					pics = $scope.travels[travelId].pics;
+				var p, places = $scope.travels[$scope.travelId].places,
+					pics = $scope.travels[$scope.travelId].pics;
 
 				for (var p in places) {
 					$scope.menuPlaces[p] = {
