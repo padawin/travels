@@ -69,7 +69,7 @@
 				pics = $scope.travels[$scope.travelId].pics;
 
 			if (places.length == 0) {
-				$location.url('/pictures/' + $scope.travelId);
+				$location.path('/pictures/' + $scope.travelId).replace();
 				return;
 			}
 
