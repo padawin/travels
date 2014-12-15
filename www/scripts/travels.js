@@ -91,7 +91,8 @@
 
 	travelsApp.controller('PicturesListCtrl', function($rootScope, $scope, $http, $routeParams, $location){
 		var travelId = $routeParams.travelId,
-			place = $routeParams.place;
+			place = $routeParams.place,
+			picture, file;
 
 		$rootScope.$emit('display-places-list', 1);
 
@@ -125,6 +126,8 @@
 			}
 
 			pictures.sort();
+			$scope.travelId = travelId;
+			$scope.place = place;
 			$scope.pictures = pictures;
 		});
 	});

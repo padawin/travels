@@ -1,7 +1,7 @@
 <h2>{{title}}</h2>
 <ul id="pictures">
-	<li class="picture-wrapper" ng-repeat="picture in pictures">
-		<a href="images/1024x768x0/{{picture}}">
+	<li class="picture-wrapper" ng-repeat="(index, picture) in pictures">
+		<a href="#/picture/{{travelId}}/{{place}}/{{index}}">
 			<img ng-src="images/250x250x1/{{picture}}" alt="{{picture}}" />
 		</a>
 	</li>
