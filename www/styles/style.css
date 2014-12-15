@@ -226,6 +226,10 @@ header #controls a {
 	text-align: center;
 }
 
+.picture img {
+	max-width: 100%;
+}
+
 .picture .nav li {
 	display: inline-block;
 	width: 49%;
