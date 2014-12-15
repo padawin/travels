@@ -125,6 +125,46 @@
 		});
 	});
 
+	travelsApp.controller('PictureCtrl', function($rootScope, $scope, $http, $routeParams, $location){
+		var travelId = $routeParams.travelId,
+			place = $routeParams.place,
+			picture = $routeParams.picture;
+
+		$rootScope.$emit('display-places-list', 1);
+
+		getTravels($scope, $http, function($scope) {
+			if (!$scope.travels[travelId]) {
+				$location.url('/');
+				return;
+			}
+
+			var pictures, placeIndex;
+			if (!place) {
+				$scope.title = $scope.travels[travelId].title;
+				// 0 place for this travel
+				if ($scope.travels[travelId].places.length == 0) {
+					picture = $scope.travels[travelId].pics[picture];
+				}
+				// else get all the pictures of the travel
+				else {
+					picture = [].concat.apply([], $scope.travels[travelId].pics)[picture];
+				}
+			}
+			else {
+				placeIndex = $scope.travels[travelId].places.indexOf(place);
+				if (!~placeIndex) {
+					$location.url('/');
+					return;
+				}
+
+				$scope.title = $scope.travels[travelId].title + ' - ' + place;
+				picture = $scope.travels[travelId].pics[placeIndex][picture];
+			}
+
+			$scope.picture = picture;
+		});
+	});
+
 	PlacesListMenuCtrl = function($rootScope, $scope, $http, $routeParams){
 		$rootScope.$on('display-places-list', function(e, display) {
 			if (!display) {
