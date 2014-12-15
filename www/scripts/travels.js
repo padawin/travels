@@ -24,6 +24,10 @@
 				templateUrl: "partials/pictures-list.html",
 				controller: "PicturesListCtrl"
 			})
+			.when("/picture/:travelId/:place/:picture", {
+				templateUrl: "partials/picture.html",
+				controller: "PictureCtrl"
+			})
 			.otherwise({redirectTo: "" });
 	});
 
