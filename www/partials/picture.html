@@ -1,4 +1,7 @@
-<h2>{{title}}</h2>
+<h2>
+	<a href="{{backLinkTravel}}">{{title}}</a>
+	<span ng-if="backLinkPlace"> - <a href="{{backLinkPlace}}">{{subtitle}}</a></span>
+</h2>
 <section class="picture">
 	<ul class="nav">
 		<li><a href="#/picture/{{travelId}}/{{place}}/{{prev}}">Prev</a></li>
