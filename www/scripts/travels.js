@@ -135,7 +135,7 @@
 	travelsApp.controller('PictureCtrl', function($rootScope, $scope, $http, $routeParams, $location){
 		var travelId = $routeParams.travelId,
 			place = $routeParams.place,
-			picture = $routeParams.picture;
+			picture = parseInt($routeParams.picture);
 
 		$rootScope.$emit('display-places-list', 1);
 
@@ -145,16 +145,22 @@
 				return;
 			}
 
-			var pictures, placeIndex;
+			var placeIndex, next, prev, tmpPics;
+
 			if (!place) {
 				$scope.title = $scope.travels[travelId].title;
 				// 0 place for this travel
 				if ($scope.travels[travelId].places.length == 0) {
+					next = (picture + 1) % $scope.travels[travelId].pics.length;
+					prev = ($scope.travels[travelId].pics.length + picture - 1 ) % $scope.travels[travelId].pics.length;
 					picture = $scope.travels[travelId].pics[picture];
 				}
 				// else get all the pictures of the travel
 				else {
-					picture = [].concat.apply([], $scope.travels[travelId].pics)[picture];
+					tmpPics = [].concat.apply([], $scope.travels[travelId].pics);
+					next = (picture + 1) % tmpPics.length;
+					prev = (tmpPics.length + picture - 1 ) % tmpPics.length;
+					picture = tmpPics[picture];
 				}
 			}
 			else {
@@ -165,10 +171,16 @@
 				}
 
 				$scope.title = $scope.travels[travelId].title + ' - ' + place;
+				next = (picture + 1) % $scope.travels[travelId].pics[placeIndex].length;
+				prev = ($scope.travels[travelId].pics[placeIndex].length + picture - 1 ) % $scope.travels[travelId].pics[placeIndex].length;
 				picture = $scope.travels[travelId].pics[placeIndex][picture];
 			}
 
+			$scope.travelId = travelId;
+			$scope.place = place;
 			$scope.picture = picture;
+			$scope.next = next;
+			$scope.prev = prev;
 		});
 	});
 
