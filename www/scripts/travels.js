@@ -24,6 +24,10 @@
 				templateUrl: "partials/pictures-list.html",
 				controller: "PicturesListCtrl"
 			})
+			.when("/picture/:travelId/:place/:picture", {
+				templateUrl: "partials/picture.html",
+				controller: "PictureCtrl"
+			})
 			.otherwise({redirectTo: "" });
 	});
 
@@ -87,7 +91,8 @@
 
 	travelsApp.controller('PicturesListCtrl', function($rootScope, $scope, $http, $routeParams, $location){
 		var travelId = $routeParams.travelId,
-			place = $routeParams.place;
+			place = $routeParams.place,
+			picture, file;
 
 		$rootScope.$emit('display-places-list', 1);
 
@@ -121,7 +126,61 @@
 			}
 
 			pictures.sort();
+			$scope.travelId = travelId;
+			$scope.place = place;
 			$scope.pictures = pictures;
+		});
+	});
+
+	travelsApp.controller('PictureCtrl', function($rootScope, $scope, $http, $routeParams, $location){
+		var travelId = $routeParams.travelId,
+			place = $routeParams.place,
+			picture = parseInt($routeParams.picture);
+
+		$rootScope.$emit('display-places-list', 1);
+
+		getTravels($scope, $http, function($scope) {
+			if (!$scope.travels[travelId]) {
+				$location.url('/');
+				return;
+			}
+
+			var placeIndex, next, prev, tmpPics;
+
+			if (!place) {
+				$scope.title = $scope.travels[travelId].title;
+				// 0 place for this travel
+				if ($scope.travels[travelId].places.length == 0) {
+					next = (picture + 1) % $scope.travels[travelId].pics.length;
+					prev = ($scope.travels[travelId].pics.length + picture - 1 ) % $scope.travels[travelId].pics.length;
+					picture = $scope.travels[travelId].pics[picture];
+				}
+				// else get all the pictures of the travel
+				else {
+					tmpPics = [].concat.apply([], $scope.travels[travelId].pics);
+					next = (picture + 1) % tmpPics.length;
+					prev = (tmpPics.length + picture - 1 ) % tmpPics.length;
+					picture = tmpPics[picture];
+				}
+			}
+			else {
+				placeIndex = $scope.travels[travelId].places.indexOf(place);
+				if (!~placeIndex) {
+					$location.url('/');
+					return;
+				}
+
+				$scope.title = $scope.travels[travelId].title + ' - ' + place;
+				next = (picture + 1) % $scope.travels[travelId].pics[placeIndex].length;
+				prev = ($scope.travels[travelId].pics[placeIndex].length + picture - 1 ) % $scope.travels[travelId].pics[placeIndex].length;
+				picture = $scope.travels[travelId].pics[placeIndex][picture];
+			}
+
+			$scope.travelId = travelId;
+			$scope.place = place;
+			$scope.picture = picture;
+			$scope.next = next;
+			$scope.prev = prev;
 		});
 	});
 
