@@ -86,6 +86,8 @@
 					'preview': pics[p][0|Math.random()*pics[p].length]
 				};
 			}
+
+			$scope.title =  $scope.travels[$scope.travelId].title;
 		});
 	});
 
@@ -102,9 +104,9 @@
 				return;
 			}
 
-			var pictures, placeIndex;
+			var pictures, placeIndex, subtitle,
+				backLink = '#/places/' + travelId;
 			if (!place) {
-				$scope.title = $scope.travels[travelId].title;
 				// 0 place for this travel
 				if ($scope.travels[travelId].places.length == 0) {
 					pictures = $scope.travels[travelId].pics;
@@ -115,17 +117,20 @@
 				}
 			}
 			else {
+				subtitle = place;
 				placeIndex = $scope.travels[travelId].places.indexOf(place);
 				if (!~placeIndex) {
 					$location.url('/');
 					return;
 				}
 
-				$scope.title = place;
 				pictures = $scope.travels[travelId].pics[placeIndex];
 			}
 
 			pictures.sort();
+			$scope.backLink = backLink;
+			$scope.title =  $scope.travels[travelId].title;
+			$scope.subtitle = subtitle ? ' - ' + subtitle : '';
 			$scope.travelId = travelId;
 			$scope.place = place;
 			$scope.pictures = pictures;
@@ -145,10 +150,12 @@
 				return;
 			}
 
-			var placeIndex, next, prev, tmpPics;
+			var placeIndex, next, prev, tmpPics,
+				backLinkTravel = '#/places/' + travelId,
+				backLinkPlace = '';
 
+			$scope.title = $scope.travels[travelId].title;
 			if (!place) {
-				$scope.title = $scope.travels[travelId].title;
 				// 0 place for this travel
 				if ($scope.travels[travelId].places.length == 0) {
 					next = (picture + 1) % $scope.travels[travelId].pics.length;
@@ -170,12 +177,15 @@
 					return;
 				}
 
-				$scope.title = $scope.travels[travelId].title + ' - ' + place;
+				$scope.subtitle = place;
 				next = (picture + 1) % $scope.travels[travelId].pics[placeIndex].length;
 				prev = ($scope.travels[travelId].pics[placeIndex].length + picture - 1 ) % $scope.travels[travelId].pics[placeIndex].length;
 				picture = $scope.travels[travelId].pics[placeIndex][picture];
+				backLinkPlace += '#/pictures/' + travelId + '/' + place;
 			}
 
+			$scope.backLinkTravel = backLinkTravel;
+			$scope.backLinkPlace = backLinkPlace;
 			$scope.travelId = travelId;
 			$scope.place = place;
 			$scope.picture = picture;
