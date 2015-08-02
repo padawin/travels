@@ -152,17 +152,13 @@ header #controls a {
 /* END HOME PAGE */
 
 /* PLACES LIST */
-#places {
-	text-align: center;
-}
 
 #places .place {
 	display: block;
 	float: left;
-	border-bottom: 1px #aaa solid;
-	margin: 7px;
+	margin: 13px;
 	padding: 7px;
-	width: 130px;
+	width: 118px;
 }
 
 #places .place:hover {
@@ -171,12 +167,20 @@ header #controls a {
 
 #places .place img {
 	display: block;
-	margin:auto;
-	margin-bottom: 7px;
 }
 
 #places .place a {
 	text-decoration: none;
+	position: relative;
+}
+
+#places .place a span {
+	position: absolute;
+	bottom: -128px;
+	display: block;
+	width: 118px;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* END PLACES LIST */
