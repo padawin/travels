@@ -62,7 +62,6 @@ header #controls a {
 	min-height: 100vh;
 	width: 180px;
 	border-left: 4px black solid;
-	text-align: center;
 	float: right;
 	padding-bottom: 15px;
 }
