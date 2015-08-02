@@ -26,12 +26,12 @@ def generate(arbo, path, thumbFolder):
 		place = None
 		try:
 			travel = struct[-3]
-			place = struct[-2]
+			place = struct[-2].decode('utf-8')
 			placeId = ''.join(place.split(' '))
 		except IndexError:
 			travel = struct[-2]
 
-		travelId = ''.join(travel.split(' '))
+		travelId = ''.join(travel.split(' ')).decode('utf-8')
 
 		if travelId not in arbo.keys():
 			arbo[travelId] = {
@@ -43,6 +43,7 @@ def generate(arbo, path, thumbFolder):
 		tumb = False
 		if place is None:
 			pic = travel + '/' + fileName
+			pic = pic.decode('utf-8')
 			if pic not in arbo[travelId]["pics"]:
 				arbo[travelId]["pics"].append(pic)
 				tumb = True
