@@ -9,7 +9,7 @@ def getFiles(path):
 	fileList = []
 	rootdir = sys.argv[1]
 	for root, subFolders, files in os.walk(path):
-		for file in files:
+		for file in sorted(files):
 			fileList.append(os.path.join(root,file))
 
 	return fileList
