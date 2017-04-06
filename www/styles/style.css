@@ -171,11 +171,12 @@ header #controls a {
 #places .place a {
 	text-decoration: none;
 	position: relative;
+	display: inline-block;
 }
 
 #places .place a span {
 	position: absolute;
-	bottom: -128px;
+	bottom: 0;
 	display: block;
 	width: 118px;
 	left: 0px;
