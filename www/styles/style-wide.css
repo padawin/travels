@@ -1,0 +1,19 @@
+@media screen and (max-width: 770px) {
+header #title {
+	font-size: 4vw;
+}
+
+}
+
+#content #travels .travel {
+	width: 200px;
+	height: 200px;
+}
+
+#content #travels .travel a span.travel-title {
+	top: 89px;
+}
+
+#content #travels .travel img {
+	float: left;
+}
