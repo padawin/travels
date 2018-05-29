@@ -40,8 +40,6 @@ header {
 
 header #title {
 	line-height: 70px;
-	margin-right: 180px;
-	border-right: 4px black solid;
 }
 
 header #controls {
@@ -89,8 +87,11 @@ header #controls a {
 }
 
 #content {
-	margin-right: 184px;
 	padding: 7px;
+}
+
+#content.content-menu {
+	margin-right: 184px;
 }
 
 #foot {
@@ -115,8 +116,6 @@ header #controls a {
 	padding: 0px;
 	margin: 0px;
 	float:left;
-	width: 200px;
-	height: 200px;
 	text-align: center;
 	position: relative;
 	margin: 10px;
@@ -129,18 +128,12 @@ header #controls a {
 #content #travels .travel img {
 	padding: 0px;
 	margin: 0px;
-	float: left;
-}
-
-#content #travels .travel a {
-	height: 20px;
 }
 
 #content #travels .travel a span.travel-title {
 	display: block;
 	width: 100%;
 	position: absolute;
-	top: 89px;
 }
 
 #content #travels .travel a span.travel-title span {
@@ -155,7 +148,7 @@ header #controls a {
 #places .place {
 	display: block;
 	float: left;
-	margin: 13px;
+	margin: 7px;
 	padding: 7px;
 	width: 118px;
 }

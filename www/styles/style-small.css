@@ -1,0 +1,12 @@
+header #title {
+	font-size: 4vw;
+}
+
+#content #travels .travel {
+	height: 100px;
+	overflow: hidden;
+}
+
+#content #travels .travel a span.travel-title {
+	top: 40px;
+}

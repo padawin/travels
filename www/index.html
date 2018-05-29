@@ -2,17 +2,20 @@
 <html ng-app="travelsApp">
 	<head>
 		<meta charset="UTF-8" />
-		<link href="styles/style.css" rel="stylesheet" type="text/css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" type="text/css" href="styles/style.css"  />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 460px)" href="styles/style-wide.css">
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 459px)" href="styles/style-small.css">
 		<script type="text/javascript" src="scripts/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 		<script type="text/javascript" src="scripts/travels.js"></script>
 		<title>Pictures from here and there...</title>
 	</head>
-	<body>
+	<body ng-controller="PlacesListMenuCtrl">
 		<header>
 			<h1 id="title"><a href="#">Pictures from here and there...</a></h1>
 		</header>
-		<div id="menu" ng-controller="PlacesListMenuCtrl">
+		<div id="menu" ng-if="menuPlaces.length">
 			<ul id="places">
 				<li class="place" ng-repeat="place in menuPlaces | orderBy:orderProp">
 					<a href="#/pictures/{{travelId}}/{{place.name}}">
@@ -22,7 +25,7 @@
 				</li>
 			</ul>
 		</div>
-		<div id="content">
+		<div id="content" ng-class="{'content-menu': menuPlaces.length}">
 			<ng-view></ng-view>
 		</div>
 		<br class="clear" />
