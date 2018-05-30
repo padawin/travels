@@ -3,9 +3,9 @@
 	<span ng-if="backLinkPlace"> - <a href="{{backLinkPlace}}">{{subtitle}}</a></span>
 </h2>
 <section class="picture">
-	<ul class="nav">
-		<li><a href="#/picture/{{travelId}}/{{place}}/{{prev}}">Prev</a></li>
-		<li><a href="#/picture/{{travelId}}/{{place}}/{{next}}">Next</a></li>
-	</ul>
-	<img ng-src="images/1024x768x0/{{picture}}" alt="{{picture}}" />
+	<span class="wrapper">
+		<a class="nav previous" href="#/picture/{{travelId}}/{{place}}/{{prev}}"></a>
+		<a class="nav next" href="#/picture/{{travelId}}/{{place}}/{{next}}"></a>
+		<img ng-src="images/1024x768x0/{{picture}}" alt="{{picture}}" />
+	</span>
 </section>

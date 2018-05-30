@@ -221,18 +221,39 @@ header #controls a {
 	text-align: center;
 }
 
+.picture .wrapper {
+	position: relative;
+	display: inline-block;
+}
+
 .picture img {
 	max-width: 100%;
 }
 
-.picture .nav li {
-	display: inline-block;
-	width: 49%;
-	margin: 0;
-	padding: 0;
+.picture .nav {
+	position: absolute;
+	top: 0px;
+	width: 50%;
+	height: 100%;
 }
 
-.picture .nav li a {
-	display: block;
+.picture .nav.previous {
+	left: 0;
+}
+
+.picture .nav.next {
+	left: 50%;
+}
+
+.picture .nav.previous:hover {
+	background-image: url(../assets/left_arrow.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.picture .nav.next:hover {
+	background-image: url(../assets/right_arrow.png);
+	background-position: right center;
+	background-repeat: no-repeat;
 }
 /* END PICTURE PAGE */
