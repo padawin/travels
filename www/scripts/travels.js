@@ -142,7 +142,7 @@
 			place = $routeParams.place,
 			picture = parseInt($routeParams.picture);
 
-		$rootScope.$emit('display-places-list', 0);
+		$rootScope.$emit('display-places-list', 1);
 
 		getTravels($scope, $http, function($scope) {
 			if (!$scope.travels[travelId]) {
