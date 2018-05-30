@@ -29,3 +29,13 @@
 		float: left;
 	}
 }
+
+@media screen and (max-width: 722px) {
+	#menu {
+		display: none;
+	}
+
+	#content.content-menu {
+		margin-right: 0;
+	}
+}
