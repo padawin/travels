@@ -146,8 +146,7 @@ header #controls a {
 /* PLACES LIST */
 
 #places .place {
-	display: block;
-	float: left;
+	display: inline-block;
 	margin: 7px;
 	padding: 7px;
 	width: 118px;
@@ -185,9 +184,7 @@ header #controls a {
 	cursor: pointer;
 	width: 250px;
 	height: 250px;
-	float: left;
-	text-align: center;
-	position: relative;
+	display: inline-block;
 }
 
 #content .picture-wrapper > img {
