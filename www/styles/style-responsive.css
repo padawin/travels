@@ -7,6 +7,10 @@
 	#content #travels .travel a span.travel-title {
 		top: 40px;
 	}
+
+	#content #places {
+		text-align: center;
+	}
 }
 
 @media (max-width: 770px) {
@@ -37,5 +41,9 @@
 
 	#content.content-menu {
 		margin-right: 0;
+	}
+
+	#content #pictures {
+		text-align: center;
 	}
 }
