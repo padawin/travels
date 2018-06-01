@@ -213,6 +213,7 @@ header #title {
 }
 
 .picture .wrapper {
+	margin-top: 6px;
 	position: relative;
 	display: inline-block;
 }
