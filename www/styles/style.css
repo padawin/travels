@@ -28,11 +28,6 @@ a img{
 	border:none;
 }
 
-.msg{
-	color:red;
-}
-
-
 header {
 	background-color: #EEE;
 	border-bottom: 4px black solid;
@@ -40,19 +35,6 @@ header {
 
 header #title {
 	line-height: 70px;
-}
-
-header #controls {
-	height: 70px;
-	width: 180px;
-	float: right;
-	text-align: center;
-}
-
-header #controls a {
-	display: inline-block;
-	margin-top: 23px;
-	padding: 0px 7px 0px 7px;
 }
 
 #menu {
