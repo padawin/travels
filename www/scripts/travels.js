@@ -130,7 +130,7 @@
 			pictures.sort();
 			$scope.backLink = backLink;
 			$scope.title =  $scope.travels[travelId].title;
-			$scope.subtitle = subtitle ? ' - ' + subtitle : '';
+			$scope.subtitle = subtitle;
 			$scope.travelId = travelId;
 			$scope.place = place;
 			$scope.pictures = pictures;
