@@ -1,11 +1,16 @@
 @media screen and (max-width: 459px) {
 	#travels .travel {
-		height: 100px;
 		overflow: hidden;
 	}
 
-	#travels .travel a span.travel-title {
-		top: 40px;
+	#travels .travel a {
+		display: flex;
+		justify-content: center;
+		align-items: middle;
+	}
+
+	#travels .travel img {
+		width: 25%;
 	}
 
 	#places {
@@ -23,10 +28,6 @@
 	#travels .travel {
 		width: 200px;
 		height: 200px;
-	}
-
-	#travels .travel a span.travel-title {
-		top: 89px;
 	}
 
 	#travels .travel img {

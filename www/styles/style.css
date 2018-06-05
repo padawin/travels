@@ -130,6 +130,9 @@ header #title {
 	display: block;
 	width: 100%;
 	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
 }
 
 #travels .travel a span.travel-title span {
