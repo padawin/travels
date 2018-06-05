@@ -3,7 +3,9 @@
 import sys
 import os
 import json
-from subprocess import call
+import errno
+import time
+from images import process_image
 
 
 def get_files(path):
@@ -15,8 +17,29 @@ def get_files(path):
     return file_list
 
 
+def create_dir(file_path):
+    dirname = os.path.dirname(file_path)
+    if os.path.exists(dirname):
+        return
+
+    try:
+        os.makedirs(dirname)
+    except OSError as exc:  # Guard against race condition
+        if exc.errno != errno.EEXIST:
+            raise
+
+
 def generate_thumbnails(path, save_path, dest_path):
-    call(["php", "bin/resize.php", path, savePath, destPath])
+    for i, im in enumerate(process_image(path), start=1):
+        destination = "{directory}/{width}x{height}x{crop}/{path}".format(
+            directory=dest_path,
+            width=im[0]['width'],
+            height=im[0]['height'],
+            crop=int(im[0]['crop']),
+            path=save_path
+        )
+        create_dir(destination)
+        im[1].save(destination, "JPEG", quality=95, optimize=True)
 
 
 def generate(arbo, path, thumb_folder):
