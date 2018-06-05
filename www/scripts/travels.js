@@ -130,7 +130,7 @@
 			pictures.sort();
 			$scope.backLink = backLink;
 			$scope.title =  $scope.travels[travelId].title;
-			$scope.subtitle = subtitle ? ' - ' + subtitle : '';
+			$scope.subtitle = subtitle;
 			$scope.travelId = travelId;
 			$scope.place = place;
 			$scope.pictures = pictures;
@@ -150,24 +150,22 @@
 				return;
 			}
 
-			var placeIndex, next, prev, tmpPics,
+			var placeIndex,
+				next = null,
+				prev = null,
 				backLinkTravel = '#/places/' + travelId,
-				backLinkPlace = '';
+				backLinkPlace = '',
+				pictures;
 
 			$scope.title = $scope.travels[travelId].title;
 			if (!place) {
 				// 0 place for this travel
 				if ($scope.travels[travelId].places.length == 0) {
-					next = (picture + 1) % $scope.travels[travelId].pics.length;
-					prev = ($scope.travels[travelId].pics.length + picture - 1 ) % $scope.travels[travelId].pics.length;
-					picture = $scope.travels[travelId].pics[picture];
+					pictures = $scope.travels[travelId].pics;
 				}
 				// else get all the pictures of the travel
 				else {
-					tmpPics = [].concat.apply([], $scope.travels[travelId].pics);
-					next = (picture + 1) % tmpPics.length;
-					prev = (tmpPics.length + picture - 1 ) % tmpPics.length;
-					picture = tmpPics[picture];
+					pictures = [].concat.apply([], $scope.travels[travelId].pics);
 				}
 			}
 			else {
@@ -178,12 +176,17 @@
 				}
 
 				$scope.subtitle = place;
-				next = (picture + 1) % $scope.travels[travelId].pics[placeIndex].length;
-				prev = ($scope.travels[travelId].pics[placeIndex].length + picture - 1 ) % $scope.travels[travelId].pics[placeIndex].length;
-				picture = $scope.travels[travelId].pics[placeIndex][picture];
+				pictures = $scope.travels[travelId].pics[placeIndex];
 				backLinkPlace += '#/pictures/' + travelId + '/' + place;
 			}
 
+			if (picture > 0) {
+				prev = picture - 1;
+			}
+			if (picture < pictures.length - 1) {
+				next = picture + 1;
+			}
+			picture = pictures[picture];
 			$scope.backLinkTravel = backLinkTravel;
 			$scope.backLinkPlace = backLinkPlace;
 			$scope.travelId = travelId;

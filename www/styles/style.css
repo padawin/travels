@@ -4,6 +4,7 @@ body{
 	font-family:Helvetica, Arial, sans-serif;
 	margin: 0px;
 	padding: 0px;
+	background-color: #111111;
 }
 
 .clear{
@@ -16,11 +17,11 @@ h1, h2, h3, h4{
 	text-transform:uppercase;
 }
 
-a,a:visited{
-	color: black;
+h2, #content h2 a, #content h2 a:visited {
+	color: #EEE;
 }
 
-ul a {
+a,a:visited{
 	text-decoration: none;
 }
 
@@ -28,13 +29,16 @@ a img{
 	border:none;
 }
 
-.msg{
-	color:red;
+header #title a {
+	color: #EEE;
 }
 
+#content a, #content a:visited, #menu a, #menu a:visited {
+	color: black;
+}
 
 header {
-	background-color: #EEE;
+	background-color: #000;
 	border-bottom: 4px black solid;
 }
 
@@ -42,21 +46,8 @@ header #title {
 	line-height: 70px;
 }
 
-header #controls {
-	height: 70px;
-	width: 180px;
-	float: right;
-	text-align: center;
-}
-
-header #controls a {
-	display: inline-block;
-	margin-top: 23px;
-	padding: 0px 7px 0px 7px;
-}
-
 #menu {
-	background-color: #EEE;
+	background-color: #000;
 	min-height: 100vh;
 	width: 180px;
 	border-left: 4px black solid;
@@ -112,7 +103,7 @@ header #controls a {
 }
 
 #content #travels .travel {
-	border: 1px white solid;
+	border: 1px black solid;
 	padding: 0px;
 	margin: 0px;
 	float:left;
@@ -222,6 +213,7 @@ header #controls a {
 }
 
 .picture .wrapper {
+	margin-top: 6px;
 	position: relative;
 	display: inline-block;
 }

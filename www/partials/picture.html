@@ -4,8 +4,8 @@
 </h2>
 <section class="picture">
 	<span class="wrapper">
-		<a class="nav previous" href="#/picture/{{travelId}}/{{place}}/{{prev}}"></a>
-		<a class="nav next" href="#/picture/{{travelId}}/{{place}}/{{next}}"></a>
+		<a ng-if="prev != null" class="nav previous" href="#/picture/{{travelId}}/{{place}}/{{prev}}"></a>
+		<a ng-if="next != null" class="nav next" href="#/picture/{{travelId}}/{{place}}/{{next}}"></a>
 		<img ng-src="images/1024x768x0/{{picture}}" alt="{{picture}}" />
 	</span>
 </section>
