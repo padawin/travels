@@ -84,6 +84,7 @@ def generate(arbo, path, thumb_folder):
                 tumb = True
 
         if tumb:
+            time.sleep(1)
             generate_thumbnails(full_path, struct_name, thumb_folder)
 
     return arbo
