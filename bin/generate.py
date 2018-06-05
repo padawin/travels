@@ -100,9 +100,12 @@ def main(argv):
         json_data.close()
     except IOError:
         data = {}
-    arbo = generate(data, path, thumb_folder)
+    try:
+        data = generate(data, path, thumb_folder)
+    except KeyboardInterrupt:
+        pass
     with open(json_file, 'w') as outfile:
-        json.dump(arbo, outfile)
+        json.dump(data, outfile)
 
 
 if __name__ == "__main__":
