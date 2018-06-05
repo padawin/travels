@@ -109,22 +109,27 @@ header #title {
 }
 
 #travels .travel {
-	border: 1px black solid;
-	padding: 0px;
+	padding: 10px;
 	margin: 0px;
 	display: inline-block;
 	text-align: center;
 	position: relative;
-	margin: 10px;
-}
-
-#travels .travel:hover {
-	border: 1px #aaa solid;
+	box-sizing: border-box;
 }
 
 #travels .travel img {
 	padding: 0px;
 	margin: 0px;
+}
+
+#travels .travel a {
+	border: 1px black solid;
+	display: block;
+	height: 100%;
+}
+
+#travels .travel a:hover {
+	border: 1px #aaa solid;
 }
 
 #travels .travel a span.travel-title {
