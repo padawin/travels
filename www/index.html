@@ -15,7 +15,7 @@
 			<h1 id="title"><a href="#">Pictures from here and there...</a></h1>
 		</header>
 		<div id="menu" ng-if="menuPlaces.length">
-			<ul id="places">
+			<ul>
 				<li class="place" ng-repeat="place in menuPlaces | orderBy:orderProp">
 					<a href="#/pictures/{{travelId}}/{{place.name}}">
 					<img ng-src="images/118x133x1/{{place.preview}}" alt="{{place.preview}}" />

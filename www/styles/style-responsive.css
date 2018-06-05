@@ -1,14 +1,19 @@
 @media screen and (max-width: 459px) {
-	#content #travels .travel {
-		height: 100px;
+	#travels .travel {
 		overflow: hidden;
 	}
 
-	#content #travels .travel a span.travel-title {
-		top: 40px;
+	#travels .travel a {
+		display: flex;
+		justify-content: center;
+		align-items: middle;
 	}
 
-	#content #places {
+	#travels .travel img {
+		width: 25%;
+	}
+
+	#places {
 		text-align: center;
 	}
 }
@@ -20,16 +25,12 @@
 }
 
 @media screen and (min-width: 460px) {
-	#content #travels .travel {
-		width: 200px;
-		height: 200px;
+	#travels .travel {
+		width: 222px;
+		height: 222px;
 	}
 
-	#content #travels .travel a span.travel-title {
-		top: 89px;
-	}
-
-	#content #travels .travel img {
+	#travels .travel img {
 		float: left;
 	}
 }
@@ -43,7 +44,7 @@
 		margin-right: 0;
 	}
 
-	#content #pictures {
+	#pictures {
 		text-align: center;
 	}
 
