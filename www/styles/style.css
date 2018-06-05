@@ -13,7 +13,7 @@ body{
 
 h1, h2, h3, h4{
 	margin: 0px;
-	text-align:center;
+	text-align: center;
 	text-transform:uppercase;
 }
 
@@ -74,7 +74,7 @@ header #title {
 
 #menu #places .place img {
 	display: block;
-	margin:auto;
+	margin: auto;
 }
 
 #content {
