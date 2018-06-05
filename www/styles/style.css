@@ -46,6 +46,8 @@ header #title {
 	line-height: 70px;
 }
 
+/* Menu */
+
 #menu {
 	background-color: #000;
 	min-height: 100vh;
@@ -55,27 +57,30 @@ header #title {
 	padding-bottom: 15px;
 }
 
-#menu #places {
+#menu ul {
 	list-style:none;
 	margin: 0px;
 	padding: 0px;
 }
 
-#menu #places .place {
+#menu .place {
 	border-bottom: 1px #aaa solid;
 	margin: 7px;
 	padding: 7px;
+	width: 118px;
 }
 
-#menu #places .place:hover {
+#menu .place:hover {
 	background-color: #ddd;
 	cursor: pointer;
 }
 
-#menu #places .place img {
+#menu .place img {
 	display: block;
 	margin: auto;
 }
+
+/* End Menu */
 
 #content {
 	padding: 7px;
@@ -102,7 +107,7 @@ header #title {
 	padding: 0px;
 }
 
-#content #travels .travel {
+#travels .travel {
 	border: 1px black solid;
 	padding: 0px;
 	margin: 0px;
@@ -112,22 +117,22 @@ header #title {
 	margin: 10px;
 }
 
-#content #travels .travel:hover {
+#travels .travel:hover {
 	border: 1px #aaa solid;
 }
 
-#content #travels .travel img {
+#travels .travel img {
 	padding: 0px;
 	margin: 0px;
 }
 
-#content #travels .travel a span.travel-title {
+#travels .travel a span.travel-title {
 	display: block;
 	width: 100%;
 	position: absolute;
 }
 
-#content #travels .travel a span.travel-title span {
+#travels .travel a span.travel-title span {
 	background-color: white;
 	padding: 7px;
 }
@@ -151,13 +156,12 @@ header #title {
 	display: block;
 }
 
-#places .place a {
-	text-decoration: none;
+.place a {
 	position: relative;
 	display: inline-block;
 }
 
-#places .place a span {
+.place a span {
 	position: absolute;
 	bottom: 0;
 	display: block;
