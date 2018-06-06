@@ -125,7 +125,7 @@ header #title {
 #travels .travel a {
 	border: 1px black solid;
 	display: block;
-	height: 100%;
+	line-height: 11px;
 }
 
 #travels .travel a:hover {
