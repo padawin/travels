@@ -52,15 +52,15 @@ def process_image_for_config(fname, config):
         return im
     im = image_transpose_exif(Image.open(fname))
     size = (config["width"], config["height"])
+    scale_x = size[0] / im.size[0]
+    scale_y = size[1] / im.size[1]
     if config["crop"]:
-        im = im.resize(size, Image.ANTIALIAS)
-        im = new_img(size, im)
+        scale = max(scale_x, scale_y)
     else:
-        scale_x = size[0] / im.size[0]
-        scale_y = size[1] / im.size[1]
         scale = min(scale_x, scale_y)
-        size = tuple(int(round(value * scale)) for value in im.size)
-        im = new_img(size, im.resize(size, Image.ANTIALIAS))
+    size2 = tuple(int(round(value * scale)) for value in im.size)
+    im = im.resize(size2, Image.ANTIALIAS)
+    im = new_img(size, im)
     return im
 
 
