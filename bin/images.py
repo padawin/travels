@@ -2,7 +2,6 @@ import functools
 from PIL import Image
 
 images_config = [
-    {"crop": False, "height": 133, "width": 118},
     {"crop": False, "height": 768, "width": 1024},
     {"crop": True, "height": 100, "width": 100},
     {"crop": True, "height": 133, "width": 118},
