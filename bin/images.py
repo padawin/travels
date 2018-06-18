@@ -41,12 +41,15 @@ def image_transpose_exif(im):
 
 def process_image_for_config(fname, config):
     def new_img(size, im_to_paste=None):
-        im = Image.new("RGB", size)
+        im = Image.new(
+            "RGB",
+            (min(size[0], im_to_paste.size[0]), min(size[1], im_to_paste.size[1]))
+        )
         im.paste(
             im_to_paste,
             (
-                (size[0] - im_to_paste.size[0]) // 2,
-                (size[1] - im_to_paste.size[1]) // 2,
+                min(0, (size[0] - im_to_paste.size[0]) // 2),
+                min(0, (size[1] - im_to_paste.size[1]) // 2),
             ),
         )
         return im
