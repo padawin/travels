@@ -77,9 +77,6 @@
 				return;
 			}
 
-			pics.sort();
-			places.sort();
-
 			for (var p in places) {
 				$scope.places[p] = {
 					'name': places[p],
@@ -127,7 +124,6 @@
 				pictures = $scope.travels[travelId].pics[placeIndex];
 			}
 
-			pictures.sort();
 			$scope.backLink = backLink;
 			$scope.title =  $scope.travels[travelId].title;
 			$scope.subtitle = subtitle;
@@ -210,9 +206,6 @@
 				$scope.menuPlaces = [];
 				var p, places = $scope.travels[$scope.travelId].places,
 					pics = $scope.travels[$scope.travelId].pics;
-
-				pics.sort();
-				places.sort();
 
 				for (var p in places) {
 					$scope.menuPlaces[p] = {
