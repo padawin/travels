@@ -39,8 +39,8 @@
 		}
 		else {
 			$http.get('data/travels.json').success(function(data) {
-				travels = data;
-				$scope.travels = data;
+				travels = data.travels;
+				$scope.travels = travels;
 				doneCallback && doneCallback($scope);
 			});
 		}

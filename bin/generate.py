@@ -58,8 +58,12 @@ def generate(arbo, path, thumb_folder):
 
         travel_id = ''.join(travel.split(' '))
 
-        if travel_id not in arbo.keys():
-            arbo[travel_id] = {
+        if 'newest' not in arbo:
+            arbo['newest'] = list()
+        if 'travels' not in arbo:
+            arbo['travels'] = dict()
+        if travel_id not in arbo['travels'].keys():
+            arbo['travels'][travel_id] = {
                 "title": travel,
                 "places": [],
                 "pics": []
@@ -68,20 +72,22 @@ def generate(arbo, path, thumb_folder):
         tumb = False
         if place is None:
             pic = travel + '/' + file_name
-            if pic not in arbo[travel_id]["pics"]:
-                arbo[travel_id]["pics"].append(pic)
+            if pic not in arbo['travels'][travel_id]["pics"]:
+                arbo['travels'][travel_id]["pics"].append(pic)
+                arbo['newest'].append(pic)
                 tumb = True
         else:
-            if place not in arbo[travel_id]["places"]:
-                arbo[travel_id]["places"].append(place)
+            if place not in arbo['travels'][travel_id]["places"]:
+                arbo['travels'][travel_id]["places"].append(place)
 
-            place_index = arbo[travel_id]["places"].index(place)
-            if len(arbo[travel_id]["pics"]) < place_index + 1:
-                arbo[travel_id]["pics"].append([])
+            place_index = arbo['travels'][travel_id]["places"].index(place)
+            if len(arbo['travels'][travel_id]["pics"]) < place_index + 1:
+                arbo['travels'][travel_id]["pics"].append([])
 
             pic = travel + '/' + place + '/' + file_name
-            if pic not in arbo[travel_id]["pics"][place_index]:
-                arbo[travel_id]["pics"][place_index].append(pic)
+            if pic not in arbo['travels'][travel_id]["pics"][place_index]:
+                arbo['travels'][travel_id]["pics"][place_index].append(pic)
+                arbo['newest'].append(pic)
                 tumb = True
 
         if tumb:
