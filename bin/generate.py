@@ -14,6 +14,7 @@ def get_files(path):
         for file_name in sorted(files):
             file_list.append(os.path.join(root, file_name))
 
+    file_list.sort()
     return file_list
 
 
