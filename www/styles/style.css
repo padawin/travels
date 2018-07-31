@@ -132,6 +132,8 @@ header #title {
 }
 #latest a {
 	display: inline-block;
+	max-width: 400px;
+	position: relative;
 }
 #travels .travel a, #latest a {
 	border: 1px black solid;
