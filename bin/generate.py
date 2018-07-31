@@ -44,6 +44,9 @@ def generate_thumbnails(path, save_path, dest_path):
 
 
 def generate(arbo, path, thumb_folder):
+    arbo['latest'] = list()
+    if 'travels' not in arbo:
+        arbo['travels'] = dict()
     for full_path in get_files(path):
         print(full_path)
         struct_name = full_path[len(path):]
@@ -58,10 +61,6 @@ def generate(arbo, path, thumb_folder):
 
         travel_id = ''.join(travel.split(' '))
 
-        if 'latest' not in arbo:
-            arbo['latest'] = list()
-        if 'travels' not in arbo:
-            arbo['travels'] = dict()
         if travel_id not in arbo['travels'].keys():
             arbo['travels'][travel_id] = {
                 "title": travel,
