@@ -105,7 +105,7 @@
 		$rootScope.$emit('display-places-list', 0);
 
 		getTravels($scope, $http, function($scope) {
-			$scope.backLink = null;
+			$scope.backLink = "#/latest";
 			$scope.title =  "Latest";
 			$scope.travelId = "latest";
 			$scope.place = null;
