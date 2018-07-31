@@ -2,12 +2,12 @@
 	#travels .travel {
 	}
 
-	#travels .travel a {
+	#travels .travel a, #latest a {
 		display: flex;
 		justify-content: center;
 	}
 
-	#travels .travel img {
+	#travels .travel img, #latest img {
 		width: 25%;
 		height: 25%;
 	}
