@@ -58,8 +58,8 @@ def generate(arbo, path, thumb_folder):
 
         travel_id = ''.join(travel.split(' '))
 
-        if 'newest' not in arbo:
-            arbo['newest'] = list()
+        if 'latest' not in arbo:
+            arbo['latest'] = list()
         if 'travels' not in arbo:
             arbo['travels'] = dict()
         if travel_id not in arbo['travels'].keys():
@@ -74,7 +74,7 @@ def generate(arbo, path, thumb_folder):
             pic = travel + '/' + file_name
             if pic not in arbo['travels'][travel_id]["pics"]:
                 arbo['travels'][travel_id]["pics"].append(pic)
-                arbo['newest'].append(pic)
+                arbo['latest'].append(pic)
                 tumb = True
         else:
             if place not in arbo['travels'][travel_id]["places"]:
@@ -87,7 +87,7 @@ def generate(arbo, path, thumb_folder):
             pic = travel + '/' + place + '/' + file_name
             if pic not in arbo['travels'][travel_id]["pics"][place_index]:
                 arbo['travels'][travel_id]["pics"][place_index].append(pic)
-                arbo['newest'].append(pic)
+                arbo['latest'].append(pic)
                 tumb = True
 
         if tumb:
