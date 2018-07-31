@@ -18,7 +18,7 @@
 				controller: "LatestCtrl"
 			})
 			.when("/picture/latest//:picture", {
-				templateUrl: "partials/picture.html",
+				templateUrl: "partials/latest-picture.html",
 				controller: "LatestPictureCtrl"
 			})
 			.when("/places/:travelId", {
@@ -226,14 +226,9 @@
 		$rootScope.$emit('display-places-list', 0);
 
 		getTravels($scope, $http, function($scope) {
-			var placeIndex,
-				next = null,
-				prev = null,
-				backLinkTravel = '#/latest',
-				backLinkPlace = '',
-				pictures;
-
-			$scope.title = "Latest";
+			var next = null, prev = null,
+				backLinkTravel, backLinkPlace,
+				sections;
 
 			if (picture > 0) {
 				prev = picture - 1;
@@ -242,6 +237,15 @@
 				next = picture + 1;
 			}
 			picture = latest[picture];
+			sections = picture.split('/');
+			$scope.title = sections[0];
+			backLinkTravel = '#/places/' + sections[0];
+			if (sections.length == 3) {
+				$scope.subtitle = sections[1];
+				backLinkPlace = '#/pictures/' + sections[0] + '/' + sections[1];
+			}
+
+
 			$scope.backLinkTravel = backLinkTravel;
 			$scope.backLinkPlace = backLinkPlace;
 			$scope.travelId = travelId;

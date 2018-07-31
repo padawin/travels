@@ -1,0 +1,12 @@
+<h2>
+	<a href="#/latest">Latest</a>
+	- <a href="{{backLinkTravel}}">{{title}}</a>
+	<span ng-if="backLinkPlace"> - <a href="{{backLinkPlace}}">{{subtitle}}</a></span>
+</h2>
+<section class="picture">
+	<span class="wrapper">
+		<a ng-if="prev != null" class="nav previous" href="#/picture/{{travelId}}/{{place}}/{{prev}}"></a>
+		<a ng-if="next != null" class="nav next" href="#/picture/{{travelId}}/{{place}}/{{next}}"></a>
+		<img ng-src="images/1024x768x0/{{picture}}" alt="{{picture}}" />
+	</span>
+</section>
