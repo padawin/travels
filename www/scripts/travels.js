@@ -2,6 +2,7 @@
 	var travelsApp,
 		travelsAppMenu,
 		travels,
+		latest,
 		PlacesListCtrl,
 		getTravels;
 
@@ -11,6 +12,14 @@
 			.when("/", {
 				templateUrl: "partials/travels-list.html",
 				controller: "TravelsListCtrl"
+			})
+			.when("/latest", {
+				templateUrl: "partials/pictures-list.html",
+				controller: "LatestCtrl"
+			})
+			.when("/picture/latest//:picture", {
+				templateUrl: "partials/picture.html",
+				controller: "LatestPictureCtrl"
 			})
 			.when("/places/:travelId", {
 				templateUrl: "partials/places-list.html",
@@ -40,6 +49,7 @@
 		else {
 			$http.get('data/travels.json').success(function(data) {
 				travels = data.travels;
+				latest = data.latest;
 				$scope.travels = travels;
 				doneCallback && doneCallback($scope);
 			});
@@ -50,6 +60,10 @@
 		$rootScope.$emit('display-places-list', 0);
 		getTravels($scope, $http, function($scope){
 			var t, pics;
+			$scope.latest = [].concat.apply([], latest)
+				.slice(0)
+				.sort(function() { return 0.5 - Math.random() })
+				.splice(0, 4);
 			for (t in $scope.travels) {
 				$scope.travels[t].id = t;
 				$scope.travels[t].previewPics = [].concat.apply([], $scope.travels[t].pics)
@@ -84,6 +98,18 @@
 			}
 
 			$scope.title =  $scope.travels[$scope.travelId].title;
+		});
+	});
+
+	travelsApp.controller('LatestCtrl', function($rootScope, $scope, $http, $routeParams, $location){
+		$rootScope.$emit('display-places-list', 0);
+
+		getTravels($scope, $http, function($scope) {
+			$scope.backLink = null;
+			$scope.title =  "Latest";
+			$scope.travelId = "latest";
+			$scope.place = null;
+			$scope.pictures = latest;
 		});
 	});
 
@@ -182,6 +208,40 @@
 				next = picture + 1;
 			}
 			picture = pictures[picture];
+			$scope.backLinkTravel = backLinkTravel;
+			$scope.backLinkPlace = backLinkPlace;
+			$scope.travelId = travelId;
+			$scope.place = place;
+			$scope.picture = picture;
+			$scope.next = next;
+			$scope.prev = prev;
+		});
+	});
+
+	travelsApp.controller('LatestPictureCtrl', function($rootScope, $scope, $http, $routeParams, $location){
+		var travelId = "latest",
+			place = $routeParams.place,
+			picture = parseInt($routeParams.picture);
+
+		$rootScope.$emit('display-places-list', 0);
+
+		getTravels($scope, $http, function($scope) {
+			var placeIndex,
+				next = null,
+				prev = null,
+				backLinkTravel = '#/latest',
+				backLinkPlace = '',
+				pictures;
+
+			$scope.title = "Latest";
+
+			if (picture > 0) {
+				prev = picture - 1;
+			}
+			if (picture < latest.length - 1) {
+				next = picture + 1;
+			}
+			picture = latest[picture];
 			$scope.backLinkTravel = backLinkTravel;
 			$scope.backLinkPlace = backLinkPlace;
 			$scope.travelId = travelId;

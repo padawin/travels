@@ -109,22 +109,32 @@ header #title {
 }
 
 #travels .travel {
+	display: inline-block;
+}
+#latest {
+	display: block;
+}
+#travels .travel, #latest {
 	padding: 10px;
 	margin: 0px;
-	display: inline-block;
 	text-align: center;
 	position: relative;
 	box-sizing: border-box;
 }
 
-#travels .travel img {
+#travels .travel img, #latest img {
 	padding: 0px;
 	margin: 0px;
 }
 
 #travels .travel a {
-	border: 1px black solid;
 	display: block;
+}
+#latest a {
+	display: inline-block;
+}
+#travels .travel a, #latest a {
+	border: 1px black solid;
 	line-height: 11px;
 }
 
@@ -132,7 +142,7 @@ header #title {
 	border: 1px #aaa solid;
 }
 
-#travels .travel a span.travel-title {
+#travels .travel a span.travel-title, #latest span.travel-title {
 	width: 100%;
 	position: absolute;
 	left: 50%;
@@ -141,7 +151,8 @@ header #title {
 	line-height: 33px;
 }
 
-#travels .travel a span.travel-title span {
+#travels .travel a span.travel-title span,
+#latest span.travel-title span {
 	background-color: white;
 	padding: 7px;
 }

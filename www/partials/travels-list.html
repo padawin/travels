@@ -1,4 +1,10 @@
 <ul id="travels">
+	<li id="latest">
+		<a ng-if="latest" href="#/latest">
+			<img ng-repeat="preview in latest" ng-src="images/100x100x1/{{preview}}" alt="{{preview}}" />
+			<span class="travel-title"><span>Latest</span></span>
+		</a>
+	</li>
 	<li ng-repeat="travel in travels" class="travel">
 		<a href="#/places/{{travel.id}}">
 			<img ng-repeat="preview in travel.previewPics" ng-src="images/100x100x1/{{preview}}" alt="{{preview}}" />
