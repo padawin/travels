@@ -48,7 +48,6 @@
 
 	travelsApp.controller('TravelsListCtrl', function($rootScope, $scope, $http){
 		$rootScope.$emit('display-places-list', 0);
-		$scope.orderProp = 'title';
 		getTravels($scope, $http, function($scope){
 			var t, pics;
 			for (t in $scope.travels) {
