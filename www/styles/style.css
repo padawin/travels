@@ -138,7 +138,7 @@ header #title {
 	line-height: 11px;
 }
 
-#travels .travel a:hover {
+#travels .travel a:hover, #latest a:hover {
 	border: 1px #aaa solid;
 }
 
