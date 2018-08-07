@@ -239,12 +239,11 @@
 			picture = latest[picture];
 			sections = picture.split('/');
 			$scope.title = sections[0];
-			backLinkTravel = '#/places/' + sections[0];
+			backLinkTravel = '#/places/' + sections[0].replace(/ /g, '');
 			if (sections.length == 3) {
 				$scope.subtitle = sections[1];
-				backLinkPlace = '#/pictures/' + sections[0] + '/' + sections[1];
+				backLinkPlace = '#/pictures/' + sections[0].replace(/ /g, '') + '/' + sections[1];
 			}
-
 
 			$scope.backLinkTravel = backLinkTravel;
 			$scope.backLinkPlace = backLinkPlace;
