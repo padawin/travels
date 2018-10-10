@@ -1,5 +1,6 @@
 @media screen and (max-width: 459px) {
 	#travels .travel {
+		width: 100%;
 	}
 
 	#travels .travel a, #latest a {
