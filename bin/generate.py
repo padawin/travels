@@ -4,8 +4,7 @@ import sys
 import os
 import json
 import errno
-import time
-from images import process_image
+from images import process_image_for_config
 
 
 def get_files(path):
@@ -30,27 +29,29 @@ def create_dir(file_path):
             raise
 
 
-def generate_thumbnails(path, save_path, dest_path):
-    for i, im in enumerate(process_image(path), start=1):
-        destination = "{directory}/{width}x{height}x{crop}/{path}".format(
-            directory=dest_path,
-            width=im[0]['width'],
-            height=im[0]['height'],
-            crop=int(im[0]['crop']),
-            path=save_path
-        )
-        create_dir(destination)
-        im[1].save(destination, "JPEG", quality=95, optimize=True)
+def generate_thumbnail(source_dir, path, image_format, dest_dir):
+    width, height, crop = image_format.split("x")
+    input_file = "{}/{}".format(source_dir, path)
+    im = process_image_for_config(
+        input_file,
+        {"width": int(width), "height": int(height), "crop": bool(int(crop))}
+    )
+    destination = "{directory}/{image_format}/{path}".format(
+        directory=dest_dir,
+        image_format=image_format,
+        path=path
+    )
+    create_dir(destination)
+    im.save(destination, "JPEG", quality=95, optimize=True)
 
 
-def generate(arbo, path, thumb_folder):
+def generate_json(arbo, path):
     arbo['latest'] = list()
     if 'travels' not in arbo:
         arbo['travels'] = dict()
     for full_path in get_files(path):
-        print(full_path)
         struct_name = full_path[len(path):]
-        struct = struct_name.split('/')
+        struct = struct_name.strip("/").split('/')
         file_name = struct[-1]
         place = None
         try:
@@ -68,13 +69,11 @@ def generate(arbo, path, thumb_folder):
                 "pics": []
             }
 
-        tumb = False
         if place is None:
             pic = travel + '/' + file_name
             if pic not in arbo['travels'][travel_id]["pics"]:
                 arbo['travels'][travel_id]["pics"].append(pic)
                 arbo['latest'].append(pic)
-                tumb = True
         else:
             if place not in arbo['travels'][travel_id]["places"]:
                 arbo['travels'][travel_id]["places"].append(place)
@@ -87,33 +86,32 @@ def generate(arbo, path, thumb_folder):
             if pic not in arbo['travels'][travel_id]["pics"][place_index]:
                 arbo['travels'][travel_id]["pics"][place_index].append(pic)
                 arbo['latest'].append(pic)
-                tumb = True
-
-        if tumb:
-            time.sleep(1)
-            generate_thumbnails(full_path, struct_name, thumb_folder)
 
     return arbo
 
 
-def main(argv):
-    path = argv[0]
-    json_file = argv[1]
-    thumb_folder = argv[2]
-
-    try:
-        json_data = open(json_file)
-        data = json.load(json_data)
-        json_data.close()
-    except IOError:
-        data = {}
-    try:
-        data = generate(data, path, thumb_folder)
-    except KeyboardInterrupt:
-        pass
-    with open(json_file, 'w') as outfile:
-        json.dump(data, outfile)
-
-
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    operation = sys.argv[1]
+    argv = sys.argv[2:]
+    if operation == "json":
+        json_file = argv[0]
+        source_dir = argv[1]
+        try:
+            json_data = open(json_file)
+            data = json.load(json_data)
+            json_data.close()
+        except IOError:
+            data = {}
+        try:
+            data = generate_json(data, source_dir)
+        except KeyboardInterrupt:
+            pass
+        with open(json_file, 'w') as outfile:
+            json.dump(data, outfile, sort_keys=True)
+    elif operation == "thumb":
+        source_dir = argv[0]
+        file_path = argv[1]
+        image_format = argv[2]
+        dest_dir = argv[3]
+
+        generate_thumbnail(source_dir, file_path, image_format, dest_dir)

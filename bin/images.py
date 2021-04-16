@@ -1,13 +1,6 @@
 import functools
 from PIL import Image
 
-images_config = [
-    {"crop": False, "height": 768, "width": 1024},
-    {"crop": True, "height": 100, "width": 100},
-    {"crop": True, "height": 133, "width": 118},
-    {"crop": True, "height": 250, "width": 250},
-]
-
 
 def image_transpose_exif(im):
     """
@@ -65,8 +58,3 @@ def process_image_for_config(fname, config):
     im = im.resize(size2, Image.ANTIALIAS)
     im = new_img(size, im)
     return im
-
-
-def process_image(fname):
-    for config in images_config:
-        yield config, process_image_for_config(fname, config)
