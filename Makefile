@@ -1,4 +1,4 @@
-images := $(shell find $(SOURCE_DIR) -iname '*.jpg' -exec sh -c 'echo "{}" | sed -e "s/ /\\\ /g"' \; | sort) # slow
+images := $(shell find $(SOURCE_DIR) -iname '*.jpg' | sed -e "s/ /\\\ /g" | sort)
 dest_images := $(subst $(SOURCE_DIR),$(DEST_DIR)/1024x768x0,$(images))\
 			   $(subst $(SOURCE_DIR),$(DEST_DIR)/100x100x1,$(images))\
 			   $(subst $(SOURCE_DIR),$(DEST_DIR)/118x133x1,$(images))\
