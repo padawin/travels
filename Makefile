@@ -1,3 +1,15 @@
+ifeq ($(SOURCE_DIR),)
+$(error "SOURCE_DIR missing")
+endif
+
+ifeq ($(DEST_DIR),)
+$(error "DEST_DIR missing")
+endif
+
+ifeq ($(JSON_FILE),)
+$(error "JSON_FILE missing")
+endif
+
 images := $(shell find $(SOURCE_DIR) -iname '*.jpg' | sed -e "s/ /\\\ /g" | sort)
 dest_images := $(subst $(SOURCE_DIR),$(DEST_DIR)/1024x768x0,$(images))\
 			   $(subst $(SOURCE_DIR),$(DEST_DIR)/100x100x1,$(images))\
