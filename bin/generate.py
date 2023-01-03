@@ -45,7 +45,7 @@ def generate_thumbnail(source_dir, path, image_format, dest_dir):
     im.save(destination, "JPEG", quality=95, optimize=True)
 
 
-def generate_json(arbo, path):
+def generate_arbo(arbo, path):
     arbo['latest'] = list()
     if 'travels' not in arbo:
         arbo['travels'] = dict()
@@ -90,22 +90,27 @@ def generate_json(arbo, path):
     return arbo
 
 
+def _parse_source_directory(source_dir, json_file):
+    try:
+        json_data = open(json_file)
+        data = json.load(json_data)
+        json_data.close()
+    except IOError:
+        data = {}
+    try:
+        data = generate_arbo(data, source_dir)
+    except KeyboardInterrupt:
+        pass
+    return data
+
+
 if __name__ == "__main__":
     operation = sys.argv[1]
     argv = sys.argv[2:]
     if operation == "json":
         json_file = argv[0]
         source_dir = argv[1]
-        try:
-            json_data = open(json_file)
-            data = json.load(json_data)
-            json_data.close()
-        except IOError:
-            data = {}
-        try:
-            data = generate_json(data, source_dir)
-        except KeyboardInterrupt:
-            pass
+        data = _parse_source_directory(source_dir, json_file)
         with open(json_file, 'w') as outfile:
             json.dump(data, outfile, sort_keys=True)
     elif operation == "thumb":
