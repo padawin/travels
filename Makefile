@@ -20,6 +20,11 @@ dest_images := $(subst :,\:,$(dest_images))
 .PHONY: all
 all: $(dest_images)
 	./bin/generate.py json '$(JSON_FILE)' $(SOURCE_DIR)
+	cp -r www/assets www/styles "$(DEST_DIR)"
+	./bin/generator '$(JSON_FILE)' "$(DEST_DIR)"
+
+build:
+	go build -o ./bin/generator ./bin/generate_pages.go
 
 $(DEST_DIR)/images/1024x768x0/%:
 	./bin/generate.py thumb "$(SOURCE_DIR)/" "$(subst $(DEST_DIR)/images/1024x768x0/,,$@)" 1024x768x0 "$(DEST_DIR)/images/"

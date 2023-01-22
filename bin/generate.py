@@ -71,8 +71,11 @@ def generate_arbo(arbo, path):
 
         if place is None:
             pic = travel + '/' + file_name
-            if pic not in arbo['travels'][travel_id]["pics"]:
-                arbo['travels'][travel_id]["pics"].append(pic)
+            if len(arbo['travels'][travel_id]["pics"]) == 0:
+                arbo['travels'][travel_id]["pics"].append([])
+
+            if pic not in arbo['travels'][travel_id]["pics"][0]:
+                arbo['travels'][travel_id]["pics"][0].append(pic)
                 arbo['latest'].append(pic)
         else:
             if place not in arbo['travels'][travel_id]["places"]:
