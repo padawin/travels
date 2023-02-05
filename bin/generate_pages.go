@@ -129,7 +129,11 @@ func main() {
 	compileRandomLatest(destDir)
 
 	// Travels
-	for _, travel := range albums.Travels {
+	processTravels(destDir, albums.Travels)
+}
+
+func processTravels(destDir string, travels map[string]AlbumTravel) {
+	for _, travel := range travels {
 		err := os.MkdirAll(destDir+"/travels/"+travel.Title, 0755)
 		if err != nil {
 			log.Fatal(err)
