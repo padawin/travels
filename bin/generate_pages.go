@@ -112,6 +112,8 @@ func main() {
 	var jsonFile string = os.Args[1]
 	var destDir string = os.Args[2]
 
+	force = os.Getenv("FORCE") != ""
+
 	albums := getAlbums(jsonFile)
 
 	// Home page
@@ -293,7 +295,7 @@ func getAlbums(jsonFile string) Albums {
 
 func compileTemplate(t *template.Template, destFile string, data interface{}) {
 	f, err := os.Open(destFile)
-	if err == nil {
+	if err == nil && !force {
 		f.Close()
 		return
 	}
