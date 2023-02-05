@@ -13,14 +13,16 @@ import (
 
 // Declare type pointer to a template
 var (
-	randomImageTemplate *template.Template
-	homepageTemplate    *template.Template
-	placesTemplate      *template.Template
-	picturesTemplate    *template.Template
-	pictureTemplate     *template.Template
-	funcMap             = template.FuncMap{
+	funcMap = template.FuncMap{
 		"url": createURL,
 	}
+	randomImageTemplate   = template.Must(template.New("random.php").Funcs(funcMap).ParseFiles("templates/random.php"))
+	homepageTemplate      = template.Must(template.New("index.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/index.html"))
+	placesTemplate        = template.Must(template.New("places-list.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/places-list.html"))
+	picturesTemplate      = template.Must(template.New("pictures-list.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/pictures-list.html"))
+	pictureTemplate       = template.Must(template.New("picture.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/picture.html"))
+
+	force bool
 )
 
 func createURL(components ...interface{}) string {
@@ -107,12 +109,6 @@ type randomPictureData struct {
 }
 
 func main() {
-	randomImageTemplate = template.Must(template.New("random.php").Funcs(funcMap).ParseFiles("templates/random.php"))
-	homepageTemplate = template.Must(template.New("index.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/index.html"))
-	placesTemplate = template.Must(template.New("places-list.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/places-list.html"))
-	picturesTemplate = template.Must(template.New("pictures-list.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/pictures-list.html"))
-	pictureTemplate = template.Must(template.New("picture.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/picture.html"))
-
 	var jsonFile string = os.Args[1]
 	var destDir string = os.Args[2]
 
