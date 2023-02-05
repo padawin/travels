@@ -8,6 +8,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 	"text/template"
 )
 
@@ -18,6 +19,8 @@ var (
 	}
 	randomImageTemplate   = template.Must(template.New("random.php").Funcs(funcMap).ParseFiles("templates/random.php"))
 	homepageTemplate      = template.Must(template.New("index.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/index.html"))
+	latestTemplate        = template.Must(template.New("latest.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/latest.html"))
+	latestPictureTemplate = template.Must(template.New("latest-picture.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/latest-picture.html"))
 	placesTemplate        = template.Must(template.New("places-list.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/places-list.html"))
 	picturesTemplate      = template.Must(template.New("pictures-list.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/pictures-list.html"))
 	pictureTemplate       = template.Must(template.New("picture.html").Funcs(funcMap).ParseFiles("templates/header.html", "templates/footer.html", "templates/picture.html"))
@@ -120,16 +123,73 @@ func main() {
 	compileTemplate(homepageTemplate, destDir+"/index.html", albums.getTravelsOrdered())
 
 	// Latest
-	latestPicturesData := picturesListData{
-		Travel:   "Latest",
-		Pictures: albums.Latest,
-	}
-	compileTemplate(picturesTemplate, destDir+"/latest.html", latestPicturesData)
+	processLatestPages(destDir, albums.Latest)
 	prepareLatestImages(destDir, albums)
 	compileRandomLatest(destDir)
 
 	// Travels
 	processTravels(destDir, albums.Travels)
+}
+
+func processLatestPages(destDir string, pictures []string) {
+	latestPicturesData := picturesListData{
+		Pictures: pictures,
+	}
+	destDir = destDir + "/latest"
+	err := os.MkdirAll(destDir, 0755)
+	if err != nil {
+		log.Fatal(err)
+	}
+	compileTemplate(latestTemplate, destDir+"/index.html", latestPicturesData)
+	for i, p := range pictures {
+		destFile := destDir + "/" + strconv.Itoa(i) + ".html"
+		var previous, next *int
+		if i < len(pictures)-1 {
+			n := i + 1
+			next = &n
+		}
+		if i > 0 {
+			p := i - 1
+			previous = &p
+		}
+		parts := strings.Split(p, "/")
+		travel := parts[0]
+		place := ""
+		if len(parts) == 3 {
+			place = parts[1]
+		}
+		compileTemplate(
+			latestPictureTemplate,
+			destFile,
+			picturePageData{
+				Travel:   travel,
+				Place:    place,
+				Picture:  p,
+				Previous: previous,
+				Next:     next,
+			},
+		)
+	}
+}
+
+func prepareLatestImages(destDir string, albums Albums) {
+	// delete previous Latest
+	err := os.RemoveAll(destDir + "/images/100x100x1/latest")
+	if err != nil {
+		log.Fatal(err)
+	}
+	// create 100x100x1/latest
+	err = os.MkdirAll(destDir+"/images/100x100x1/latest", 0755)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// copy latest images in directory
+	for i, img := range albums.Latest {
+		err = os.Symlink("../"+img, fmt.Sprintf("%s/images/100x100x1/latest/latest_%d.jpg", destDir, i))
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }
 
 func processTravels(destDir string, travels map[string]AlbumTravel) {
@@ -156,30 +216,10 @@ func processTravels(destDir string, travels map[string]AlbumTravel) {
 	}
 }
 
-func prepareLatestImages(destDir string, albums Albums) {
-	// delete previous __latest__
-	err := os.RemoveAll(destDir + "/images/100x100x1/__latest__")
-	if err != nil {
-		log.Fatal(err)
-	}
-	// create 100x100x1/latest
-	err = os.MkdirAll(destDir+"/images/100x100x1/__latest__", 0755)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// copy latest images in directory
-	for i, img := range albums.Latest {
-		err = os.Symlink("../"+img, fmt.Sprintf("%s/images/100x100x1/__latest__/latest_%d.jpg", destDir, i))
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-}
-
 func compileRandomLatest(destDir string) {
 	compileTemplate(
 		randomImageTemplate,
-		destDir+"/images/100x100x1/__latest__/random.php",
+		destDir+"/images/100x100x1/latest/random.php",
 		randomPictureData{
 			DestWidth:      400,
 			DestHeight:     100,
@@ -238,7 +278,7 @@ func compilePicturesList(destDir string, travel AlbumTravel, place string, place
 	if place != "" {
 		placePath = "/" + place
 	}
-	destFile = destDir + "/travels/" + travel.Title + "/" + placePath + "/index.html"
+	destFile = destDir + "/travels/" + travel.Title + placePath + "/index.html"
 	compileTemplate(
 		picturesTemplate,
 		destFile,
