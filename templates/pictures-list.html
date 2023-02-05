@@ -1,0 +1,33 @@
+{{template "header.html"}}
+{{ if .Places }}
+<div id="menu" ng-if="menuPlaces.length">
+	<ul>
+		{{ range $_, $placeName := .Places }}
+		<li class="place">
+			<a href="/travels/{{ $.Travel }}/{{ $placeName }}">
+				<img src="/images/118x133x1/{{ $.Travel }}/{{ $placeName }}/random.php" alt="{{ $placeName }}" />
+				<span class="place_name">{{ $placeName }}</span>
+			</a>
+		</li>
+		{{ end }}
+	</ul>
+</div>
+{{ end }}
+<div id="content">
+	<h2>
+		{{ if .Place }}
+			<a href="/travels/{{ .Travel }}">{{ .Travel }}</a>
+			<span> - {{ .Place }}</span>
+		{{ else }}
+			<a href="">{{ .Travel }}</a>
+		{{ end }}
+	</h2>
+	<ul id="pictures">
+		{{ range $i, $_ := .Pictures }}<li class="picture-wrapper">
+			<a href="{{ url "travels" $.Travel $.Place $i }}.html">
+				<img src="/images/250x250x1/{{ . }}" alt="{{ . }}" />
+			</a>
+		</li>{{ end }}
+	</ul>
+</div>
+{{template "footer.html"}}

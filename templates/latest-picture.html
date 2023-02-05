@@ -1,0 +1,22 @@
+{{template "header.html"}}
+<div id="content">
+	<h2>
+		<a href="/travels/{{ .Travel }}">{{ .Travel }}</a>
+		{{ if .Place }}
+			<a href="/travels/{{ .Travel }}/{{ .Place }}"> - {{ .Place }}</a>
+		{{ end }}
+	</h2>
+	<section class="picture">
+		<span class="wrapper">
+			{{ if .Previous }}
+			<a class="nav previous" href="{{ url "latest" .Previous }}.html"></a>
+			{{ end }}
+			{{ if .Next }}
+			<a class="nav next" href="{{ url "latest" .Next }}.html"></a>
+			{{ end }}
+			<img src="/images/1024x768x0/{{ .Picture }}" alt="{{ .Picture }}" />
+		</span>
+	</section>
+</div>
+{{template "footer.html"}}
+
