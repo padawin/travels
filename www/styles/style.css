@@ -125,6 +125,7 @@ header #title {
 #travels .travel img, #latest img {
 	padding: 0px;
 	margin: 0px;
+	width: 100%;
 }
 
 #travels .travel a {
@@ -137,7 +138,7 @@ header #title {
 }
 #travels .travel a, #latest a {
 	border: 1px black solid;
-	line-height: 11px;
+	line-height: 1px;
 }
 
 #travels .travel a:hover, #latest a:hover {

@@ -3,14 +3,17 @@
 	<ul id="travels">
 		<li id="latest">
 			<a href="/latest/index.html">
-				<img src="images/100x100x1/latest/random.php" alt="Latest" />
+				<img src="/images/100x100x1/latest/random.php" alt="Latest" />
 				<span class="travel-title"><span>Latest</span></span>
 			</a>
 		</li>
 		{{ range $travel := . }}
 		<li class="travel">
 			<a href="/travels/{{ $travel.Title}}">
-				<img src="/images/100x100x1/{{ $travel.Title }}/random.php" alt="{{ $travel.Title }}" />
+				<picture>
+					<source srcset="/images/100x100x1/{{ $travel.EncodedTitle }}/random.php" alt="{{ $travel.Title }}" media="(min-width: 460px)" />
+					<img src="/images/100x100x1/{{ $travel.EncodedTitle }}/random-mobile.php" alt="{{ $travel.Title }}" />
+				</picture>
 				<span class="travel-title"><span>{{ $travel.Title }}</span></span>
 			</a>
 		</li>

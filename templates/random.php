@@ -10,7 +10,7 @@ function listDir(string $path) : array{
 		if (is_dir($fullPath)) {
 			$res = array_merge($res, listDir($fullPath));
 		}
-		else if ($item != "random.php") {
+		else if ($item != "random.php" && $item != "random-mobile.php") {
 			array_push($res, $fullPath);
 		}
 	}

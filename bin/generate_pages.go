@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/url"
 	"os"
 	"sort"
 	"strconv"
@@ -47,9 +48,10 @@ func createURL(components ...interface{}) string {
 }
 
 type AlbumTravel struct {
-	Pictures [][]string `json:"pics"`
-	Places   []string   `json:"places"`
-	Title    string     `json:"title"`
+	Pictures     [][]string `json:"pics"`
+	Places       []string   `json:"places"`
+	Title        string     `json:"title"`
+	EncodedTitle string
 }
 
 type Albums struct {
@@ -60,6 +62,7 @@ type Albums struct {
 func (a *Albums) getTravelsOrdered() []AlbumTravel {
 	var res []AlbumTravel
 	for _, travel := range a.Travels {
+		travel.EncodedTitle = url.PathEscape(travel.Title)
 		res = append(res, travel)
 	}
 	sort.Slice(res, func(i, j int) bool {
@@ -242,6 +245,18 @@ func compileRandomHomepage(destDir string, travel AlbumTravel) {
 			ThumbWidth:     100,
 			ThumbHeight:    100,
 			ThumbPositions: []coordinate{{0, 0}, {100, 0}, {0, 100}, {100, 100}},
+		},
+	)
+	compileTemplate(
+		randomImageTemplate,
+		destDir+"/images/100x100x1/"+travel.Title+"/random-mobile.php",
+		randomPictureData{
+			DestWidth:      400,
+			DestHeight:     100,
+			CountThumbs:    4,
+			ThumbWidth:     100,
+			ThumbHeight:    100,
+			ThumbPositions: []coordinate{{0, 0}, {100, 0}, {200, 0}, {300, 0}},
 		},
 	)
 }

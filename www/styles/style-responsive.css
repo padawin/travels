@@ -8,11 +8,6 @@
 		justify-content: center;
 	}
 
-	#travels .travel img, #latest img {
-		width: 25%;
-		height: 25%;
-	}
-
 	#places {
 		text-align: center;
 	}
