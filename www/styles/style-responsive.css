@@ -41,13 +41,13 @@
 
 	.picture .nav.previous, .picture .nav.previous:hover {
 		background-image: url(../assets/left_arrow_mini.png);
-		background-position: left top;
+		background-position: left center;
 		background-repeat: no-repeat;
 	}
 
 	.picture .nav.next, .picture .nav.next:hover {
 		background-image: url(../assets/right_arrow_mini.png);
-		background-position: right top;
+		background-position: right center;
 		background-repeat: no-repeat;
 	}
 }
