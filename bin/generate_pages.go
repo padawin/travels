@@ -47,6 +47,14 @@ func createURL(components ...interface{}) string {
 	return res
 }
 
+func getTitle(travel, place string) string {
+	title := travel
+	if place != "" {
+		title += " - " + place
+	}
+	return title
+}
+
 type AlbumTravel struct {
 	Pictures     [][]string `json:"pics"`
 	Places       []string   `json:"places"`
@@ -80,24 +88,33 @@ func (a *Albums) getTravelsOrdered() []AlbumTravel {
 }
 
 type placesListData struct {
-	Travel string
-	Places []string
+	MetaTitle string
+	MetaUrl   string
+	MetaImage string
+	Travel    string
+	Places    []string
 }
 
 type picturesListData struct {
-	Travel   string
-	Place    string
-	Pictures []string
-	Places   []string
+	MetaTitle string
+	MetaUrl   string
+	MetaImage string
+	Travel    string
+	Place     string
+	Pictures  []string
+	Places    []string
 }
 
 type picturePageData struct {
-	Travel   string
-	Place    string
-	Picture  string
-	Previous *int
-	Next     *int
-	Places   []string
+	MetaTitle string
+	MetaUrl   string
+	MetaImage string
+	Travel    string
+	Place     string
+	Picture   string
+	Previous  *int
+	Next      *int
+	Places    []string
 }
 
 type coordinate struct {
@@ -136,16 +153,19 @@ func main() {
 
 func processLatestPages(destDir string, pictures []string) {
 	latestPicturesData := picturesListData{
-		Pictures: pictures,
+		MetaTitle: "Latest pictures",
+		MetaUrl:   "/latest/index.html",
+		MetaImage: "/pictures/512x269x1/latest/random.php",
+		Pictures:  pictures,
 	}
-	destDir = destDir + "/latest"
-	err := os.MkdirAll(destDir, 0755)
+	err := os.MkdirAll(destDir+"/latest", 0755)
 	if err != nil {
 		log.Fatal(err)
 	}
-	compileTemplate(latestTemplate, destDir+"/index.html", latestPicturesData)
+	compileTemplate(latestTemplate, destDir+"/latest/index.html", latestPicturesData)
 	for i, p := range pictures {
-		destFile := destDir + "/" + strconv.Itoa(i) + ".html"
+		url := "/latest/" + strconv.Itoa(i) + ".html"
+		destFile := destDir + url
 		var previous, next *int
 		if i < len(pictures)-1 {
 			n := i + 1
@@ -165,32 +185,37 @@ func processLatestPages(destDir string, pictures []string) {
 			latestPictureTemplate,
 			destFile,
 			picturePageData{
-				Travel:   travel,
-				Place:    place,
-				Picture:  p,
-				Previous: previous,
-				Next:     next,
+				MetaTitle: getTitle(travel, place),
+				MetaUrl:   url,
+				MetaImage: "/pictures/512x269x1/" + p,
+				Travel:    travel,
+				Place:     place,
+				Picture:   p,
+				Previous:  previous,
+				Next:      next,
 			},
 		)
 	}
 }
 
 func prepareLatestImages(destDir string, albums Albums) {
-	// delete previous Latest
-	err := os.RemoveAll(destDir + "/images/100x100x1/latest")
-	if err != nil {
-		log.Fatal(err)
-	}
-	// create 100x100x1/latest
-	err = os.MkdirAll(destDir+"/images/100x100x1/latest", 0755)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// copy latest images in directory
-	for i, img := range albums.Latest {
-		err = os.Symlink("../"+img, fmt.Sprintf("%s/images/100x100x1/latest/latest_%d.jpg", destDir, i))
+	for _, resolution := range []string{"100x100x1", "512x269x1"} {
+		// delete previous Latest
+		err := os.RemoveAll(destDir + "/images/" + resolution + "/latest")
 		if err != nil {
 			log.Fatal(err)
+		}
+		// create 100x100x1/latest
+		err = os.MkdirAll(destDir+"/images/"+resolution+"/latest", 0755)
+		if err != nil {
+			log.Fatal(err)
+		}
+		// copy latest images in directory
+		for i, img := range albums.Latest {
+			err = os.Symlink("../"+img, fmt.Sprintf("%s/images/"+resolution+"/latest/latest_%d.jpg", destDir, i))
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
@@ -232,6 +257,18 @@ func compileRandomLatest(destDir string) {
 			ThumbPositions: []coordinate{{0, 0}, {100, 0}, {200, 0}, {300, 0}},
 		},
 	)
+	compileTemplate(
+		randomImageTemplate,
+		destDir+"/images/512x269x1/latest/random.php",
+		randomPictureData{
+			DestWidth:      512,
+			DestHeight:     269,
+			CountThumbs:    1,
+			ThumbWidth:     512,
+			ThumbHeight:    269,
+			ThumbPositions: []coordinate{{0, 0}},
+		},
+	)
 }
 
 func compileRandomHomepage(destDir string, travel AlbumTravel) {
@@ -262,12 +299,28 @@ func compileRandomHomepage(destDir string, travel AlbumTravel) {
 }
 
 func compilePlacesList(destDir string, travel AlbumTravel) {
+	url := "/travels/" + travel.Title + "/index.html"
 	compileTemplate(
 		placesTemplate,
-		destDir+"/travels/"+travel.Title+"/index.html",
+		destDir+url,
 		placesListData{
-			Travel: travel.Title,
-			Places: travel.Places,
+			MetaTitle: getTitle(travel.Title, ""),
+			MetaUrl:   url,
+			MetaImage: "/pictures/512x269x1/" + travel.Title + "/random.php",
+			Travel:    travel.Title,
+			Places:    travel.Places,
+		},
+	)
+	compileTemplate(
+		randomImageTemplate,
+		destDir+"/images/512x269x1/"+travel.Title+"/random.php",
+		randomPictureData{
+			DestWidth:      512,
+			DestHeight:     269,
+			CountThumbs:    1,
+			ThumbWidth:     512,
+			ThumbHeight:    269,
+			ThumbPositions: []coordinate{{0, 0}},
 		},
 	)
 }
@@ -293,19 +346,36 @@ func compilePicturesList(destDir string, travel AlbumTravel, place string, place
 	if place != "" {
 		placePath = "/" + place
 	}
-	destFile = destDir + "/travels/" + travel.Title + placePath + "/index.html"
+	url := "/travels/" + travel.Title + placePath + "/index.html"
+	destFile = destDir + url
 	compileTemplate(
 		picturesTemplate,
 		destFile,
 		picturesListData{
-			Travel:   travel.Title,
-			Place:    place,
-			Pictures: travel.Pictures[placeIndex],
-			Places:   travel.Places,
+			MetaTitle: getTitle(travel.Title, place),
+			MetaUrl:   url,
+			MetaImage: "/pictures/512x269x1/" + travel.Title + placePath + "/random.php",
+			Travel:    travel.Title,
+			Place:     place,
+			Pictures:  travel.Pictures[placeIndex],
+			Places:    travel.Places,
+		},
+	)
+	compileTemplate(
+		randomImageTemplate,
+		destDir+"/images/512x269x1/"+travel.Title+placePath+"/random.php",
+		randomPictureData{
+			DestWidth:      512,
+			DestHeight:     269,
+			CountThumbs:    1,
+			ThumbWidth:     512,
+			ThumbHeight:    269,
+			ThumbPositions: []coordinate{{0, 0}},
 		},
 	)
 	for i, p := range travel.Pictures[placeIndex] {
-		destFile = destDir + "/travels/" + travel.Title + "/" + placePath + "/" + strconv.Itoa(i) + ".html"
+		url = "/travels/" + travel.Title + placePath + "/" + strconv.Itoa(i) + ".html"
+		destFile = destDir + url
 		var previous, next *int
 		if i < len(travel.Pictures[placeIndex])-1 {
 			n := i + 1
@@ -319,12 +389,15 @@ func compilePicturesList(destDir string, travel AlbumTravel, place string, place
 			pictureTemplate,
 			destFile,
 			picturePageData{
-				Travel:   travel.Title,
-				Place:    place,
-				Picture:  p,
-				Places:   travel.Places,
-				Previous: previous,
-				Next:     next,
+				MetaTitle: getTitle(travel.Title, place),
+				MetaUrl:   url,
+				MetaImage: "/pictures/512x269x1/" + p,
+				Travel:    travel.Title,
+				Place:     place,
+				Picture:   p,
+				Places:    travel.Places,
+				Previous:  previous,
+				Next:      next,
 			},
 		)
 	}

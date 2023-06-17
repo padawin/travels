@@ -13,6 +13,7 @@ endif
 images := $(shell find $(SOURCE_DIR) -iname '*.jpg' | sed -e "s/ /\\\ /g" | sort)
 dest_images := $(subst $(SOURCE_DIR),$(DEST_DIR)/images/1024x768x0,$(images))\
 			   $(subst $(SOURCE_DIR),$(DEST_DIR)/images/100x100x1,$(images))\
+			   $(subst $(SOURCE_DIR),$(DEST_DIR)/images/512x269x1,$(images))\
 			   $(subst $(SOURCE_DIR),$(DEST_DIR)/images/118x133x1,$(images))\
 			   $(subst $(SOURCE_DIR),$(DEST_DIR)/images/250x250x1,$(images))
 dest_images := $(subst :,\:,$(dest_images))
@@ -31,6 +32,9 @@ $(DEST_DIR)/images/1024x768x0/%:
 
 $(DEST_DIR)/images/100x100x1/%:
 	./bin/generate.py thumb "$(SOURCE_DIR)/" "$(subst $(DEST_DIR)/images/100x100x1/,,$@)" 100x100x1 "$(DEST_DIR)/images/"
+
+$(DEST_DIR)/images/512x269x1/%:
+	./bin/generate.py thumb "$(SOURCE_DIR)/" "$(subst $(DEST_DIR)/images/512x269x1/,,$@)" 512x269x1 "$(DEST_DIR)/images/"
 
 $(DEST_DIR)/images/118x133x1/%:
 	./bin/generate.py thumb "$(SOURCE_DIR)/" "$(subst $(DEST_DIR)/images/118x133x1/,,$@)" 118x133x1 "$(DEST_DIR)/images/"

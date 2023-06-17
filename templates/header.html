@@ -3,6 +3,20 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+{{ if .MetaUrl }}
+		<meta property="og:url" content="{{ .MetaUrl }}" />
+{{ else }}
+		<meta property="og:url" content="/" />
+{{ end }}
+		<meta property="og:site_name" content="Ghislain's travel photos" />
+{{ if .MetaTitle }}
+		<meta property="og:title" content="{{ .MetaTitle }}" />
+{{ else }}
+		<meta property="og:title" content="Pictures from here and there..." />
+{{ end }}
+{{ if .MetaImage }}
+		<meta property="og:image" content="{{ .MetaImage }}" />
+{{ end }}
 		<link rel="stylesheet" type="text/css" href="/styles/style.css"  />
 		<link rel="stylesheet" type="text/css" href="/styles/style-responsive.css">
 		<title>Pictures from here and there...</title>
